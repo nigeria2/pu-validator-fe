@@ -21,6 +21,14 @@ export const markImageAsUnclearAsync = createAsyncThunk(
   }
 );
 
+export const markImageAsInvalidAsync = createAsyncThunk(
+  "transcribe/invalid",
+  async (id) => {
+    const response = await transcribeAPI.markImageAsInvalid(id);
+    return response.data;
+  }
+);
+
 export const transcribeSlice = createSlice({
   name: "pollingUnits",
   initialState,

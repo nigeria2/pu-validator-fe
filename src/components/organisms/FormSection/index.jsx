@@ -23,6 +23,7 @@ import apgaImg from "../../../assets/svgs/apga.svg";
 import lpImg from "../../../assets/svgs/lp.svg";
 import nnpcImg from "../../../assets/svgs/nnpp.svg";
 import {
+  markImageAsInvalidAsync,
   markImageAsUnclearAsync,
   storeTranscribedDataAsync,
 } from "../../../store/features/transcribe";
@@ -140,6 +141,16 @@ export const FormSection = ({ data }) => {
       reloadPage();
     } else {
       toast.error("Failed to mark image as unclear");
+    }
+  };
+
+  const markImageAsInvalid = async () => {
+    const response = await dispatch(markImageAsInvalidAsync(data.image.id));
+    if (response.payload) {
+      toast.success("Fetching new image...");
+      reloadPage();
+    } else {
+      toast.error("Failed to flag image as invalid");
     }
   };
 
@@ -339,17 +350,34 @@ export const FormSection = ({ data }) => {
       </section>
 
       <Flex justifyContent="space-between">
-        <Button
+        {/* <Button
           onClick={markImageAsUnclear}
           backgroundColor="#C8C8C8"
           color="red"
           text="Unclear Image"
           margin="16px 0 0 0"
-        />
+        /> */}
         <Button
           onClick={prepareSubmissionData}
-          backgroundColor="#C8C8C8"
+          backgroundColor="#ededed"
           text="SUBMIT"
+          margin="16px 0 0 0"
+        />
+      </Flex>
+
+      <Flex justifyContent="space-between" margin="20px 0">
+        <Button
+          onClick={markImageAsUnclear}
+          bgColor="#e74c3c"
+          color="#ffffff"
+          text="Unclear Image"
+          margin="16px 0 0 0"
+        />
+        <Button
+          onClick={markImageAsInvalid}
+          bgColor="#e74c3c"
+          color="#ffffff"
+          text="Invalid Form"
           margin="16px 0 0 0"
         />
       </Flex>
