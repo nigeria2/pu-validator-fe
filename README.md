@@ -19,8 +19,8 @@
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <!-- <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li> -->
   </ol>
 </details>
 
@@ -42,7 +42,7 @@ This is an open-source platform...
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+This section should lists major frameworks/libraries used for this project.
 
 * [![React][React.js]][React-url]
 
@@ -77,7 +77,7 @@ _Do the following to get this project on your local machine._
    ```
 3. Add a .env file to your project with the following keys
    ```js
-   REACT_APP=
+   REACT_APP_API_URL=
    ```
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
@@ -104,7 +104,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License.
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
