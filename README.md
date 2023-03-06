@@ -24,9 +24,8 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 [Polling Unit Validator](https://forensic.nigeria2.com/)
@@ -34,7 +33,7 @@
 This is an open-source platform...
 
 <!-- Here's why:
-* Reason 1. 
+* Reason 1.
 * Reason 2.
 * Reason 3. -->
 
@@ -44,13 +43,12 @@ This is an open-source platform...
 
 This section should lists major frameworks/libraries used for this project.
 
-* [![React][React.js]][React-url]
-
+- [![React][react.js]][react-url]
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
-
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 Read this section on how to get started.
@@ -58,7 +56,8 @@ Read this section on how to get started.
 ### Prerequisites
 
 To start working on this project, you need to setup `npm` on your local machine.
-* npm
+
+- npm
   ```sh
   npm install npm@latest -g
   ```
@@ -82,8 +81,8 @@ _Do the following to get this project on your local machine._
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
-
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -93,22 +92,21 @@ Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+3. Commit your Changes (`git commit -m 'feat(amazing-feature): Add some Amazing Feature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+> NOTE: _for accepted commit style, please check out commitlint [here](https://commitlint.js.org/#/)_
+
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
-
-
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License.
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
-
-
 
 <!-- CONTACT
 ## Contact
@@ -119,8 +117,6 @@ Project Link: [https://github.com/nigeria2/pu-validator-fe](https://github.com/n
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
-
-
 <!-- ACKNOWLEDGMENTS
 ## Acknowledgments
 
@@ -130,9 +126,8 @@ Use this space to list resources you find helpful and would like to give credit 
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
+
+[react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[react-url]: https://reactjs.org/
