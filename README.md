@@ -33,10 +33,10 @@
 
 This is an open-source platform...
 
-Here's why:
+! -- Here's why:
 * Reason 1. 
 * Reason 2.
-* Reason 3.
+* Reason 3. -->
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
@@ -110,23 +110,23 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 
-<!-- CONTACT -->
+<!-- CONTACT
 ## Contact
 
 Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
 
-Project Link: [https://github.com/nigeria2/pu-validator-fe](https://github.com/nigeria2/pu-validator-fe)
+Project Link: [https://github.com/nigeria2/pu-validator-fe](https://github.com/nigeria2/pu-validator-fe) -->
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 
 
-<!-- ACKNOWLEDGMENTS -->
+<!-- ACKNOWLEDGMENTS
 ## Acknowledgments
 
 Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
 
-* [Example](example.com)
+* [Example](example.com) -->
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
@@ -134,3 +134,5 @@ Use this space to list resources you find helpful and would like to give credit 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
