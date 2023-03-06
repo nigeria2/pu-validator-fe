@@ -33,7 +33,7 @@
 
 This is an open-source platform...
 
-! -- Here's why:
+<!-- Here's why:
 * Reason 1. 
 * Reason 2.
 * Reason 3. -->
