@@ -4,6 +4,7 @@ import { SilentLink } from "../../atoms/SilentLink";
 import styled from "styled-components";
 import { screen } from "../../theme/utils";
 import { Loader } from "../../atoms/Loader";
+import { formatNumber } from "../../../utils/formatNumber";
 
 const SummaryText = styled.p`
   @media only screen and (${screen.sm}) {
@@ -12,6 +13,7 @@ const SummaryText = styled.p`
   }
 `;
 export const ShowResults = ({ stats }) => {
+  const totalResults = stats?.data?.data?.statistics?.total_results;
   return (
     <Flex direction="column" justifyContent="center" alignItems="center">
       <SilentLink to={`/results`}>
@@ -28,10 +30,10 @@ export const ShowResults = ({ stats }) => {
       ) : (
         stats.data && (
           <SummaryText width="80%">
-            {stats?.data?.data?.statistics?.total_results} image(s) transcribed
-            so far.{" "}
-            {stats?.data?.data?.statistics?.total_images -
-              stats?.data?.data?.statistics?.total_results}{" "}
+            {formatNumber(totalResults)} image(s) transcribed so far.{" "}
+            {formatNumber(
+              stats?.data?.data?.statistics?.total_images - totalResults
+            )}{" "}
             images not transcribed yet
           </SummaryText>
         )

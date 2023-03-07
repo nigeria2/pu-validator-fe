@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { formatNumber } from "../../../utils/formatNumber";
 
 const ProgressWrapper = styled.div`
   background-color: #dbe3e1;
@@ -46,12 +47,12 @@ export const ProgressBar = ({ value, total }) => {
   return (
     <ProgressWrapper>
       <StatusValueText top="7px" color="black">
-        {total - value} to go
+        {formatNumber(total - value)} to go
       </StatusValueText>
       <ProgressElement width={`${displayFigure}%`}>
         <StatusValueText {...innerTextProps}>{displayFigure}%</StatusValueText>
         <StatusValueText {...leftStatusTextProps} color="black">
-          {value} transcribed
+          {formatNumber(value)} transcribed
         </StatusValueText>
       </ProgressElement>
     </ProgressWrapper>
