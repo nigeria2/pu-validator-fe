@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { HomePage } from "./components/pages/HomePage";
 import { StatisticsPage } from "./components/pages/StatisticsPage";
+import { FormValidationPage } from "./components/pages/FormValidationPage";
 
 const router = createBrowserRouter([
   {
@@ -10,6 +11,10 @@ const router = createBrowserRouter([
   {
     path: "results",
     element: <StatisticsPage />,
+  },
+  {
+    path: "validate-form",
+    element: <FormValidationPage />,
   },
 ]);
 
