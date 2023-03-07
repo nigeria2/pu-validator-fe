@@ -12,9 +12,9 @@ import ReactPanZoom from "react-image-pan-zoom-rotate";
 import { NavBar } from "../../molecules";
 import { VotesDisplay } from "../../molecules/VotesDisplay";
 import { Button } from "../../atoms/Button";
+import { ProgressBar } from "../../atoms/ProgressBar";
 
-const ContentWrapper = styled(Flex)`
-  padding: 30px 0;
+const ContentWrapper = styled.div`
   gap: 1em;
   min-height: 84.3vh;
   @media only screen and (${screen.sm}) {
@@ -28,7 +28,7 @@ const LeftContent = styled(Flex)`
   border-right: 1px solid #e5e2ed;
   justify-content: center;
   align-items: center;
-  max-height: 75vh;
+  max-height: 70vh;
 
   @media only screen and (${screen.sm}) {
     padding: 30px 0;
@@ -85,43 +85,48 @@ export const FormValidationPage = () => {
   return (
     <HomeTemplate header={<NavBar />} footer={<Footer />}>
       <ContentWrapper className="container">
-        {isLoading ? (
-          <ErrorAndLoaderWrapper>
-            <Loader type="circle" width="50px" height="50px" />
-          </ErrorAndLoaderWrapper>
-        ) : isError ? (
-          <ErrorAndLoaderWrapper>
-            <ErrrorText>An error occured while fetching image</ErrrorText>
-          </ErrorAndLoaderWrapper>
-        ) : (
-          initialData && (
-            <>
-              <LeftContent width="70%">
-                <ImageWrapper>
-                  <ReactPanZoom image={initialData.data.image.url} />
-                </ImageWrapper>
-              </LeftContent>
-              <RightContent width="30%" direction="column">
-                <VotesDisplay data={initialData.data} />
+        <Flex justifyContent="center" padding="10px 0">
+          <ProgressBar width="40%" value={50} total={2000} />
+        </Flex>
+        <Flex>
+          {isLoading ? (
+            <ErrorAndLoaderWrapper>
+              <Loader type="circle" width="50px" height="50px" />
+            </ErrorAndLoaderWrapper>
+          ) : isError ? (
+            <ErrorAndLoaderWrapper>
+              <ErrrorText>An error occured while fetching image</ErrrorText>
+            </ErrorAndLoaderWrapper>
+          ) : (
+            initialData && (
+              <>
+                <LeftContent width="70%">
+                  <ImageWrapper>
+                    <ReactPanZoom image={initialData.data.image.url} />
+                  </ImageWrapper>
+                </LeftContent>
+                <RightContent width="30%" direction="column">
+                  <VotesDisplay data={initialData.data} />
 
-                <Flex justifyContent="center" direction="column">
-                  <p style={{ textAlign: "center", fontWeight: 500 }}>
-                    Do you think this list is accurate?
-                  </p>
-                  <Flex justifyContent="center">
-                    <Button
-                      bgColor="#147b5c"
-                      color="#ffffff"
-                      text="Yes"
-                      margin="0 16px 0 0"
-                    />
-                    <Button bgColor="#147b5c" color="#ffffff" text="No" />
+                  <Flex justifyContent="center" direction="column">
+                    <p style={{ textAlign: "center", fontWeight: 500 }}>
+                      Do you think this list is accurate?
+                    </p>
+                    <Flex justifyContent="center">
+                      <Button
+                        bgColor="#147b5c"
+                        color="#ffffff"
+                        text="Yes"
+                        margin="0 16px 0 0"
+                      />
+                      <Button bgColor="#147b5c" color="#ffffff" text="No" />
+                    </Flex>
                   </Flex>
-                </Flex>
-              </RightContent>
-            </>
-          )
-        )}
+                </RightContent>
+              </>
+            )
+          )}
+        </Flex>
       </ContentWrapper>
       {/* <ShowResults stats={{ data: initialData, isLoading, isError }} /> */}
     </HomeTemplate>
