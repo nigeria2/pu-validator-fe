@@ -16,6 +16,12 @@ const ButtonWrapper = styled.button`
   &:hover {
     color: black;
   }
+
+  &:disabled {
+    border: 1px solid #dddddd;
+    cursor: not-allowed;
+    color: #8a8a8a;
+  }
 `;
 
 export const Button = (props) => {

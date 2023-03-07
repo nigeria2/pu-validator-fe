@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import ReCAPTCHA from "react-google-recaptcha";
 import { getLocalGovernmentsAsync } from "../../../store/features/localGovernment";
 import { pollingUnitsAsync } from "../../../store/features/pollingUnit";
 import { CheckBox, Flex } from "../../atoms";
@@ -90,6 +91,8 @@ export const FormSection = ({ data }) => {
   const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
   // const [isUnclear, setIsUnclear] = useState(false);
   const [isNotStamped, setIsNotStamped] = useState(false);
+  const [recaptchaDone, setRecaptchaDone] = useState(false);
+  const [recaptchaValue, setRecaptchaValue] = useState(null);
   const [state, setState] = useState(null);
   const [lga, setLGA] = useState(null);
   const [pollingUnit, setPollingUnit] = useState(null);
@@ -106,6 +109,15 @@ export const FormSection = ({ data }) => {
   const reloadPage = () => {
     window.setTimeout(() => window.location.reload(false), 3000);
   };
+
+  function handleRecaptcha(value) {
+    if (value) {
+      setRecaptchaValue(value);
+      setRecaptchaDone(true);
+    } else {
+      setRecaptchaDone(false);
+    }
+  }
 
   const handleInputChange = (e) => {
     setPollValues((prev) => {
@@ -192,13 +204,15 @@ export const FormSection = ({ data }) => {
       toast.error("Please select polling unit");
     } else if (isFormCorrect === null) {
       toast.error("Please let us know if the form is intact or not");
+    } else if (recaptchaValue === null) {
+      toast.error("You must verify your identity to continue");
     } else {
       const transcriptionData = {
         polling_unit_id: pollingUnit.id,
         image_id: data.image.id,
         has_corrections:
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
-        // is_unclear: isUnclear,
+        g_recaptcha_response: recaptchaValue,
         is_invalid_form: isNotPresidentialForm,
         is_not_stamped: isNotStamped,
         parties: serializePartiesDataForSubmission(pollValues),
@@ -349,6 +363,11 @@ export const FormSection = ({ data }) => {
         </DroopdownWrapper>
       </section>
 
+      <ReCAPTCHA
+        sitekey="6LdDYt0kAAAAABwNyU8Gd6YfZMbAQ1O6qRU3TyK0"
+        onChange={handleRecaptcha}
+      />
+
       <Flex justifyContent="space-between">
         {/* <Button
           onClick={markImageAsUnclear}
@@ -358,6 +377,7 @@ export const FormSection = ({ data }) => {
           margin="16px 0 0 0"
         /> */}
         <Button
+          disabled={!recaptchaDone}
           onClick={prepareSubmissionData}
           backgroundColor="#ededed"
           text="SUBMIT"
