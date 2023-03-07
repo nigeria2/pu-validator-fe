@@ -364,7 +364,7 @@ export const FormSection = ({ data }) => {
       </section>
 
       <ReCAPTCHA
-        sitekey="6LdDYt0kAAAAABwNyU8Gd6YfZMbAQ1O6qRU3TyK0"
+        sitekey={process.env.REACT_APP_RECAPTCHA_PUBLIC_KEY}
         onChange={handleRecaptcha}
       />
 
