@@ -12,6 +12,7 @@ const Label = styled(Flex)`
   min-width: 200px;
   min-height: 50px;
   font-weight: ${({ fontWeight }) => fontWeight};
+  width: 50%;
 `;
 
 export const VotesDisplay = ({ data }) => {

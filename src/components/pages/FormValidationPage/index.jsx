@@ -16,26 +16,27 @@ import { Button } from "../../atoms/Button";
 const ContentWrapper = styled(Flex)`
   padding: 30px 0;
   gap: 1em;
+  min-height: 84.3vh;
   @media only screen and (${screen.sm}) {
     display: block;
     padding: 10px;
   }
 `;
-const RightContent = styled(Flex)`
+const LeftContent = styled(Flex)`
   width: 70%;
   padding: 0 1.5em 0 0;
   border-right: 1px solid #e5e2ed;
   justify-content: center;
   align-items: center;
+  max-height: 75vh;
 
   @media only screen and (${screen.sm}) {
     padding: 30px 0;
     width: 100%;
   }
 `;
-const LeftContent = styled(Flex)`
+const RightContent = styled(Flex)`
   width: 30%;
-  max-height: 60vh;
 
   @media only screen and (${screen.sm}) {
     padding: 30px 0;
@@ -95,22 +96,29 @@ export const FormValidationPage = () => {
         ) : (
           initialData && (
             <>
-              <RightContent width="70%">
+              <LeftContent width="70%">
                 <ImageWrapper>
                   <ReactPanZoom image={initialData.data.image.url} />
                 </ImageWrapper>
-              </RightContent>
-              <LeftContent width="30%" direction="column">
+              </LeftContent>
+              <RightContent width="30%" direction="column">
                 <VotesDisplay data={initialData.data} />
 
-                <section>
-                  <p>Do you think this list is accurate</p>
+                <Flex justifyContent="center" direction="column">
+                  <p style={{ textAlign: "center", fontWeight: 500 }}>
+                    Do you think this list is accurate?
+                  </p>
                   <Flex justifyContent="center">
-                    <Button>Yes</Button>
-                    <Button>No</Button>
+                    <Button
+                      bgColor="#147b5c"
+                      color="#ffffff"
+                      text="Yes"
+                      margin="0 16px 0 0"
+                    />
+                    <Button bgColor="#147b5c" color="#ffffff" text="No" />
                   </Flex>
-                </section>
-              </LeftContent>
+                </Flex>
+              </RightContent>
             </>
           )
         )}
