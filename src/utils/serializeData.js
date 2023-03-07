@@ -12,6 +12,7 @@ export const serializeLGAData = (lga) => {
 
 export const serializePollingUnitData = (pollingUnit) => {
   return pollingUnit.map((state) => {
+    console.log("polling unit data", state);
     return {
       id: state.abbreviation,
       label: `${state.abbreviation} - ${state.name}`,
