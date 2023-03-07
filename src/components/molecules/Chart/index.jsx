@@ -8,6 +8,7 @@ import styled from "styled-components";
 // import Nnppimg from "./../../../assets/svgs/nnpp.svg";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
 import { getPartyColor } from "../../../utils/getPartyColor";
+import { formatNumber } from "../../../utils/formatNumber";
 // import { getAllowedParties } from "../../../utils/getAllowedParties";
 
 const BarChartContainer = styled.div`
@@ -168,7 +169,7 @@ function BarChart({ chartData }) {
 
   return (
     <BarChartContainer>
-      <h3>Total Votes: {totalVotes}</h3>
+      <h3>Total Votes: {formatNumber(totalVotes)}</h3>
       {sortedResult.map((item, index) => {
         const percentageWidth = (item.score / totalVotes) * 100;
 
@@ -182,7 +183,7 @@ function BarChart({ chartData }) {
               width={percentageWidth ? percentageWidth : 0}
               color={getPartyColor(item.party)}
             />
-            <BarLabel>{`${item.score} votes`}</BarLabel>
+            <BarLabel>{`${formatNumber(item.score)} votes`}</BarLabel>
           </BarContainer>
         );
       })}
