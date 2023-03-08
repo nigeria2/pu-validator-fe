@@ -3,6 +3,13 @@ import { getAllowedParties } from "../../../utils/getAllowedParties";
 import { Logo } from "../VoteInput";
 import { Flex } from "../../atoms";
 import styled from "styled-components";
+import { screen } from "../../theme/utils";
+
+const Wrapper = styled.div`
+  @media only screen and (${screen.sm}) {
+    margin-top: 16px;
+  }
+`;
 
 const Label = styled(Flex)`
   background-color: #e2e7e6;
@@ -31,7 +38,7 @@ export const VotesDisplay = ({ data }) => {
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
 
   return (
-    <div>
+    <Wrapper>
       {ALLOWED_PARTIES.map((data, idx) => (
         <Flex key={idx} width="95%" alignItems="center" margin="0 0 16px 0">
           <LogoIcon color="#147b5c" fontWeight="600">
@@ -40,6 +47,6 @@ export const VotesDisplay = ({ data }) => {
           <Label margin="0 0 0 16px">Votes</Label>
         </Flex>
       ))}
-    </div>
+    </Wrapper>
   );
 };

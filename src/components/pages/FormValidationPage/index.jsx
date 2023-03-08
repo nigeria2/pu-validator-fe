@@ -26,6 +26,7 @@ const ContentWrapper = styled.div`
   margin: auto;
   width: 95%;
   margin-bottom: 50px;
+  position: relative;
   @media only screen and (${screen.sm}) {
     display: block;
     padding: 10px;
@@ -34,24 +35,22 @@ const ContentWrapper = styled.div`
 `;
 
 const UserProfile = styled.div`
-  // height: 120px;
   position: absolute;
-  left: 35px;
-  top: 60px;
+  top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 10px;
   @media only screen and (${screen.sm}) {
     position: relative;
     left: 0px;
     top: 0px;
-    margin-buttom: 0px;
   }
 `;
 
 const UserName = styled.h6`
-  font-size: 19px;
-  margin: 0px;
+  font-size: 16px;
+  margin: 10px;
   @media only screen and (${screen.sm}) {
     font-size: 14px;
   }
@@ -60,19 +59,24 @@ const UserName = styled.h6`
 const ProfilePics = styled.img`
   height: 40px;
   width: 40px;
-`;
 
-const UserLocation = styled.p`
-  font-size: 13px;
-  color: #6d9a8d;
-  font-weight: 500;
-  margin: 5px 0 0 0;
-  display: none;
   @media only screen and (${screen.sm}) {
-    display: block;
-    font-size: 10px;
+    height: 60px;
+    width: 60px;
   }
 `;
+
+// const UserLocation = styled.p`
+//   font-size: 13px;
+//   color: #6d9a8d;
+//   font-weight: 500;
+//   margin: 5px 0 0 0;
+//   display: none;
+//   @media only screen and (${screen.sm}) {
+//     display: block;
+//     font-size: 10px;
+//   }
+// `;
 
 const ValidText = styled.h2`
   font-size: 22px;
@@ -88,11 +92,12 @@ const LeftContent = styled(Flex)`
   // border-right: 1px solid #e5e2ed;
   justify-content: center;
   align-items: center;
-  max-height: 100vh;
 
   @media only screen and (${screen.sm}) {
     padding: 10px 0;
     width: 100%;
+    height: 40vh;
+    background-color: black;
   }
 `;
 const RightContent = styled(Flex)`
@@ -139,6 +144,7 @@ const ValidateButton = styled.button`
   &:hover {
     background: #147b5c;
     color: #fff;
+    padding: 10px 20px;
   }
 `;
 
@@ -179,7 +185,7 @@ export const FormValidationPage = () => {
         <UserProfile>
           <ProfilePics src={Profilepics} alt="Profile" />
           <UserName>David Agu</UserName>
-          <UserLocation>Lagos State</UserLocation>
+          {/* <UserLocation>Lagos State</UserLocation> */}
         </UserProfile>
         <Flex directionSm="column">
           {isLoading ? (
@@ -212,15 +218,8 @@ export const FormValidationPage = () => {
                       Are the results here accurate?
                     </p>
                     <Flex justifyContent="center">
-                      {/* <Button
-                        bgColor="#147b5c"
-                        color="#ffffff"
-                        text="Yes"
-                        margin="0 16px 0 0"
-                      /> */}
                       <ValidateButton>Yes</ValidateButton>
                       <ValidateButton>No</ValidateButton>
-                      {/* <Button bgColor="#147b5c" color="#ffffff" text="No" /> */}
                     </Flex>
                   </Flex>
                 </RightContent>
