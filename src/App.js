@@ -4,6 +4,7 @@ import { StatisticsPage } from "./components/pages/StatisticsPage";
 import ProtectedRoute from "./utilityComponents";
 import { LoginPage } from "./components/pages/LoginPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { FormValidationPage } from "./components/pages/FormValidationPage";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
     path: "/validators",
     element: (
       <ProtectedRoute>
-        <StatisticsPage />
+        <FormValidationPage />
       </ProtectedRoute>
     ),
   },

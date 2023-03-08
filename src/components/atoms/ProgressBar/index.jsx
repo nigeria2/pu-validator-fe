@@ -1,14 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { formatNumber } from "../../../utils/formatNumber";
+import { screen } from "../../theme/utils";
 
 const ProgressWrapper = styled.div`
   background-color: #dbe3e1;
   margin: 16px 0;
   border-radius: 50px;
-  width: 100%;
+  width: ${({ width }) => width || "100%"};
   position: relative;
-  /* z-index: 999999; */
+
+  @media only screen and (${screen.sm}) {
+    width: 100%;
+  }
 `;
 const ProgressElement = styled.div`
   width: ${({ width }) => width};
@@ -29,7 +33,7 @@ const StatusValueText = styled.p`
   white-space: nowrap;
 `;
 
-export const ProgressBar = ({ value, total }) => {
+export const ProgressBar = ({ value, total, width }) => {
   const percentageOfCompletion = (value / total) * 100;
   const displayFigure =
     percentageOfCompletion % 2 === 0
@@ -45,7 +49,7 @@ export const ProgressBar = ({ value, total }) => {
   };
 
   return (
-    <ProgressWrapper>
+    <ProgressWrapper width={width}>
       <StatusValueText top="7px" color="black">
         {formatNumber(total - value)} to go
       </StatusValueText>
