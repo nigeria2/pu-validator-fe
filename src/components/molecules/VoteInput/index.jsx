@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Flex } from "../../atoms";
 
-const Label = styled.label`
+export const Label = styled.label`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -21,7 +21,7 @@ const Input = styled.input`
     font-size: 0.75rem;
   }
 `;
-const Logo = styled.img`
+export const Logo = styled.img`
   width: 35px;
   height: 35px;
   margin-right: 10px;
