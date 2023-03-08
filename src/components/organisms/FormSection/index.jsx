@@ -379,7 +379,7 @@ export const FormSection = ({ data }) => {
         <Button
           disabled={!recaptchaDone}
           onClick={prepareSubmissionData}
-          backgroundColor="#147b5c"
+          bgColor="#147b5c"
           color="#ffffff"
           text="SUBMIT"
           margin="16px 0 0 0"
