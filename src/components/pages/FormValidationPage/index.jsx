@@ -3,7 +3,7 @@ import { HomeTemplate } from "../../templates/HomeTemplate";
 import { Footer } from "../../molecules/Footer";
 // import { ShowResults } from "../../molecules/ShowResults";
 import styled from "styled-components";
-import { Flex } from "../../atoms";
+// import { Flex } from "../../atoms";
 import { screen } from "../../theme/utils";
 import apiService from "../../../api-utils/api-service";
 import { useQuery } from "@tanstack/react-query";
@@ -15,6 +15,36 @@ import { VotesDisplay } from "../../molecules/VotesDisplay";
 import { ProgressBar } from "../../atoms/ProgressBar";
 import Profilepics from "../../../assets/svgs/profilepix.svg";
 
+const Flex = styled.div`
+  display: flex;
+  flex-direction: ${({ direction }) => direction};
+  flex-wrap: ${({ wrap }) => wrap};
+  justify-content: ${({ justifyContent }) => justifyContent};
+  align-items: ${({ alignItems }) => alignItems};
+  align-content: ${({ alignContent }) => alignContent};
+  order: ${({ order }) => order};
+  flex-grow: ${({ grow }) => grow};
+  flex-shrink: ${({ shrink }) => shrink};
+  flex-basis: ${({ basis }) => basis};
+  align-self: ${({ alignSelf }) => alignSelf};
+  height: ${({ height }) => height};
+  width: ${({ width }) => width};
+  margin: ${({ margin }) => margin};
+  padding: ${({ padding }) => padding};
+  position: ${({ position }) => position};
+  border: ${({ border }) => border};
+  border-right: ${({ borderRight }) => borderRight};
+  border-left: ${({ borderLeft }) => borderLeft};
+  border-top: ${({ borderTop }) => borderTop};
+  border-bottom: ${({ borderBottom }) => borderBottom};
+  gap: ${({ gap }) => gap};
+  color: ${({ color }) => color};
+  @media only screen and (${screen.sm}) {
+    flex-direction: ${({ directionSm }) => directionSm};
+    padding: 10px;
+    width: 100%;
+  }
+`;
 const ContentWrapper = styled.div`
   gap: 1em;
   margin: auto;
@@ -24,24 +54,49 @@ const ContentWrapper = styled.div`
   @media only screen and (${screen.sm}) {
     display: block;
     padding: 10px;
+    width: 100%;
   }
 `;
 
 const UserProfile = styled.div`
-  height: 120px;
+  // height: 120px;
+  position: absolute;
+  left: 35px;
+  top: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media only screen and (${screen.sm}) {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    margin-buttom: 0px;
+  }
 `;
 
 const UserName = styled.h6`
-  font-size: 14px;
+  font-size: 19px;
   margin: 0px;
+  @media only screen and (${screen.sm}) {
+    font-size: 14px;
+  }
 `;
 
 const ProfilePics = styled.img`
   height: 40px;
   width: 40px;
+`;
+
+const UserLocation = styled.p`
+  font-size: 13px;
+  color: #6d9a8d;
+  font-weight: 500;
+  margin: 5px 0 0 0;
+  display: none;
+  @media only screen and (${screen.sm}) {
+    display: block;
+    font-size: 10px;
+  }
 `;
 
 const ValidText = styled.h2`
@@ -57,7 +112,7 @@ const LeftContent = styled(Flex)`
   max-height: 100vh;
 
   @media only screen and (${screen.sm}) {
-    padding: 30px 0;
+    padding: 10px 0;
     width: 100%;
   }
 `;
@@ -65,8 +120,9 @@ const RightContent = styled(Flex)`
   width: 30%;
 
   @media only screen and (${screen.sm}) {
-    padding: 30px 0;
+    padding: 10px 0;
     width: 100%;
+    flex-direction: column-reverse;
   }
 `;
 const ImageWrapper = styled.div`
@@ -98,7 +154,7 @@ const ValidateButton = styled.button`
   padding: 12px 28px;
   font-weight: bold;
   color: #147b5c;
-  margin: 0 16px 0 0;
+  margin: 0 8px;
   background: none;
 
   &:hover {
@@ -136,14 +192,16 @@ export const FormValidationPage = () => {
         {/* <Flex justifyContent="center" padding="10px 0">
           <ProgressBar width="40%" value={50} total={2000} />
         </Flex> */}
-        <Flex justifyContent="space-between" width="55%" padding="7px 0">
-          <UserProfile>
-            <ProfilePics src={Profilepics} alt="Profile" />
-            <UserName>David Agu</UserName>
-          </UserProfile>
+
+        <Flex justifyContent="center" padding="7px 0">
           <ValidText>Validator</ValidText>
         </Flex>
-        <Flex>
+        <UserProfile>
+          <ProfilePics src={Profilepics} alt="Profile" />
+          <UserName>David Agu</UserName>
+          <UserLocation>Lagos State</UserLocation>
+        </UserProfile>
+        <Flex directionSm="column">
           {isLoading ? (
             <ErrorAndLoaderWrapper>
               <Loader type="circle" width="50px" height="50px" />
@@ -171,7 +229,7 @@ export const FormValidationPage = () => {
                         fontWeight: 500,
                       }}
                     >
-                      Do you think this list is accurate?
+                      Are the results here accurate?
                     </p>
                     <Flex justifyContent="center">
                       {/* <Button
