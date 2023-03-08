@@ -3,7 +3,7 @@ import { HomeTemplate } from "../../templates/HomeTemplate";
 import { Footer } from "../../molecules/Footer";
 // import { ShowResults } from "../../molecules/ShowResults";
 import styled from "styled-components";
-// import { Flex } from "../../atoms";
+import { Flex as CustomFlex } from "../../atoms";
 import { screen } from "../../theme/utils";
 import apiService from "../../../api-utils/api-service";
 import { useQuery } from "@tanstack/react-query";
@@ -12,33 +12,9 @@ import ReactPanZoom from "react-image-pan-zoom-rotate";
 import { NavBar } from "../../molecules";
 import { VotesDisplay } from "../../molecules/VotesDisplay";
 // import { Button } from "../../atoms/Button";
-import { ProgressBar } from "../../atoms/ProgressBar";
 import Profilepics from "../../../assets/svgs/profilepix.svg";
 
-const Flex = styled.div`
-  display: flex;
-  flex-direction: ${({ direction }) => direction};
-  flex-wrap: ${({ wrap }) => wrap};
-  justify-content: ${({ justifyContent }) => justifyContent};
-  align-items: ${({ alignItems }) => alignItems};
-  align-content: ${({ alignContent }) => alignContent};
-  order: ${({ order }) => order};
-  flex-grow: ${({ grow }) => grow};
-  flex-shrink: ${({ shrink }) => shrink};
-  flex-basis: ${({ basis }) => basis};
-  align-self: ${({ alignSelf }) => alignSelf};
-  height: ${({ height }) => height};
-  width: ${({ width }) => width};
-  margin: ${({ margin }) => margin};
-  padding: ${({ padding }) => padding};
-  position: ${({ position }) => position};
-  border: ${({ border }) => border};
-  border-right: ${({ borderRight }) => borderRight};
-  border-left: ${({ borderLeft }) => borderLeft};
-  border-top: ${({ borderTop }) => borderTop};
-  border-bottom: ${({ borderBottom }) => borderBottom};
-  gap: ${({ gap }) => gap};
-  color: ${({ color }) => color};
+const Flex = styled(CustomFlex)`
   @media only screen and (${screen.sm}) {
     flex-direction: ${({ directionSm }) => directionSm};
     padding: 10px;
@@ -50,7 +26,6 @@ const ContentWrapper = styled.div`
   margin: auto;
   width: 95%;
   margin-bottom: 50px;
-  min-height: 632px;
   @media only screen and (${screen.sm}) {
     display: block;
     padding: 10px;
@@ -102,6 +77,10 @@ const UserLocation = styled.p`
 const ValidText = styled.h2`
   font-size: 22px;
   color: #147b5c;
+
+  @media only screen and (${screen.sm}) {
+    display: none;
+  }
 `;
 const LeftContent = styled(Flex)`
   width: 70%;
@@ -185,14 +164,15 @@ export const FormValidationPage = () => {
 
   return (
     <HomeTemplate
-      header={<NavBar stats={{ data: initialData, isLoading, isError }} />}
+      header={
+        <NavBar
+          justifyContent={"center"}
+          stats={{ data: initialData, isLoading, isError }}
+        />
+      }
       footer={<Footer />}
     >
       <ContentWrapper className="container">
-        {/* <Flex justifyContent="center" padding="10px 0">
-          <ProgressBar width="40%" value={50} total={2000} />
-        </Flex> */}
-
         <Flex justifyContent="center" padding="7px 0">
           <ValidText>Validator</ValidText>
         </Flex>
