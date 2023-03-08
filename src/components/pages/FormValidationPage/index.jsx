@@ -12,57 +12,30 @@ import ReactPanZoom from "react-image-pan-zoom-rotate";
 import { NavBar } from "../../molecules";
 import { VotesDisplay } from "../../molecules/VotesDisplay";
 // import { Button } from "../../atoms/Button";
-import { ProgressBar } from "../../atoms/ProgressBar";
+// import { ProgressBar } from "../../atoms/ProgressBar";
 import Profilepics from "../../../assets/svgs/profilepix.svg";
+import { Flex } from "../../atoms";
 
-const Flex = styled.div`
-  display: flex;
-  flex-direction: ${({ direction }) => direction};
-  flex-wrap: ${({ wrap }) => wrap};
-  justify-content: ${({ justifyContent }) => justifyContent};
-  align-items: ${({ alignItems }) => alignItems};
-  align-content: ${({ alignContent }) => alignContent};
-  order: ${({ order }) => order};
-  flex-grow: ${({ grow }) => grow};
-  flex-shrink: ${({ shrink }) => shrink};
-  flex-basis: ${({ basis }) => basis};
-  align-self: ${({ alignSelf }) => alignSelf};
-  height: ${({ height }) => height};
-  width: ${({ width }) => width};
-  margin: ${({ margin }) => margin};
-  padding: ${({ padding }) => padding};
-  position: ${({ position }) => position};
-  border: ${({ border }) => border};
-  border-right: ${({ borderRight }) => borderRight};
-  border-left: ${({ borderLeft }) => borderLeft};
-  border-top: ${({ borderTop }) => borderTop};
-  border-bottom: ${({ borderBottom }) => borderBottom};
-  gap: ${({ gap }) => gap};
-  color: ${({ color }) => color};
-  @media only screen and (${screen.sm}) {
-    flex-direction: ${({ directionSm }) => directionSm};
-    padding: 10px;
-    width: 100%;
-  }
-`;
 const ContentWrapper = styled.div`
   gap: 1em;
   margin: auto;
   width: 95%;
-  margin-bottom: 50px;
+  margin-bottom: 80px;
   min-height: 632px;
+
   @media only screen and (${screen.sm}) {
     display: block;
     padding: 10px;
     width: 100%;
   }
+  position: relative;
 `;
 
 const UserProfile = styled.div`
   // height: 120px;
   position: absolute;
-  left: 35px;
-  top: 60px;
+  /* left: 35px; */
+  top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
