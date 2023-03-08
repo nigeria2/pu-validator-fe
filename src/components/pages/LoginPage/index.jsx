@@ -8,7 +8,7 @@ import {
   setUser,
 } from "../../../store/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, googleLogout } from "@react-oauth/google";
 
 const Wrapper = styled(Flex)`
   justify-content: center;
@@ -30,12 +30,13 @@ export const LoginPage = () => {
 
   function handleSignout() {
     dispatch(setUser({}));
+    googleLogout();
   }
 
   async function handleResponse(response) {
     let userObject = jwtDecode(response.credential);
     await dispatch(setUser(userObject));
-    navigate("/validators");
+    // navigate("/validators");
   }
 
   useEffect(() => {
@@ -45,16 +46,17 @@ export const LoginPage = () => {
 
   return (
     <Wrapper>
-      <GoogleLogin
-        onSuccess={handleResponse}
-        onError={() => {
-          console.log("Login Failed");
-        }}
-      />
-      ;
       {Object.keys(user).length !== 0 ? (
         <SignOutBtn onClick={handleSignout}>Signout</SignOutBtn>
-      ) : null}
+      ) : (
+        <GoogleLogin
+          onSuccess={handleResponse}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+          useOneTap
+        />
+      )}
     </Wrapper>
   );
 };
