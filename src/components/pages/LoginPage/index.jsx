@@ -11,15 +11,16 @@ import { GoogleLogin, googleLogout } from "@react-oauth/google";
 
 const Wrapper = styled(Flex)`
   justify-content: center;
-  align-items: center;
+  padding-top: 20px;
   height: 100vh;
 `;
 
 const SignOutBtn = styled.button`
-  padding: 16px 32px;
+  padding: 12px 32px;
   cursor: pointer;
-  border: 0;
+  height: fit-content;
   border-radius: 64px;
+  background-color: white;
 `;
 
 export const LoginPage = () => {

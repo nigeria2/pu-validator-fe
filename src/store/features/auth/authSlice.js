@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const authSlice = createSlice({
-  name: "localGovernments",
+  name: "auth",
   initialState,
   reducers: {
     setUser: (state, action) => {
