@@ -8,6 +8,7 @@ import {
   setUser,
 } from "../../../store/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Wrapper = styled(Flex)`
   justify-content: center;
@@ -29,41 +30,28 @@ export const LoginPage = () => {
 
   function handleSignout() {
     dispatch(setUser({}));
-    document.getElementById("signInDiv").hidden = false;
   }
 
   async function handleResponse(response) {
     let userObject = jwtDecode(response.credential);
     await dispatch(setUser(userObject));
-    document.getElementById("signInDiv").hidden = true;
-    console.log("user object", user);
     navigate("/validators");
   }
 
   useEffect(() => {
-    window.google.accounts.id.initialize({
-      client_id:
-        "92393687539-22riomfdrm15bi7p3vellhe3rqr0nja4.apps.googleusercontent.com",
-
-      callback: handleResponse,
-    });
-
-    window.google.accounts.id.renderButton(
-      document.getElementById("signInDiv"),
-      {
-        theme: "outline",
-        size: "large",
-      }
-    );
-
-    window.google.accounts.id.prompt();
-
+    handleSignout();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Wrapper>
-      <div id="signInDiv"></div>
+      <GoogleLogin
+        onSuccess={handleResponse}
+        onError={() => {
+          console.log("Login Failed");
+        }}
+      />
+      ;
       {Object.keys(user).length !== 0 ? (
         <SignOutBtn onClick={handleSignout}>Signout</SignOutBtn>
       ) : null}

@@ -3,6 +3,7 @@ import { HomePage } from "./components/pages/HomePage";
 import { StatisticsPage } from "./components/pages/StatisticsPage";
 import ProtectedRoute from "./utilityComponents";
 import { LoginPage } from "./components/pages/LoginPage";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <GoogleOAuthProvider clientId="92393687539-22riomfdrm15bi7p3vellhe3rqr0nja4.apps.googleusercontent.com">
+      <RouterProvider router={router} />
+    </GoogleOAuthProvider>
+  );
 }
 
 export default App;
