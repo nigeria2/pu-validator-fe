@@ -7,7 +7,6 @@ import {
   selectUserData,
   setUser,
 } from "../../../store/features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 
 const Wrapper = styled(Flex)`
@@ -26,7 +25,6 @@ const SignOutBtn = styled.button`
 export const LoginPage = () => {
   const user = useSelector(selectUserData);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   function handleSignout() {
     dispatch(setUser({}));
