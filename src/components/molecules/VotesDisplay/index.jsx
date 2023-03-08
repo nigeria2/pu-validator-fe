@@ -9,7 +9,7 @@ const Label = styled(Flex)`
   color: ${({ color }) => color};
   justify-content: center;
   align-items: center;
-  min-width: 200px;
+  min-width: 50%;
   min-height: 50px;
   font-weight: ${({ fontWeight }) => fontWeight};
   width: 50%;

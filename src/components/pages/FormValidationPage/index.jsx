@@ -11,24 +11,50 @@ import { Loader } from "../../atoms/Loader";
 import ReactPanZoom from "react-image-pan-zoom-rotate";
 import { NavBar } from "../../molecules";
 import { VotesDisplay } from "../../molecules/VotesDisplay";
-import { Button } from "../../atoms/Button";
+// import { Button } from "../../atoms/Button";
 import { ProgressBar } from "../../atoms/ProgressBar";
+import Profilepics from "../../../assets/svgs/profilepix.svg";
 
 const ContentWrapper = styled.div`
   gap: 1em;
-  min-height: 84.3vh;
+  margin: auto;
+  width: 95%;
+  margin-bottom: 50px;
+  min-height: 632px;
   @media only screen and (${screen.sm}) {
     display: block;
     padding: 10px;
   }
 `;
+
+const UserProfile = styled.div`
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const UserName = styled.h6`
+  font-size: 14px;
+  margin: 0px;
+`;
+
+const ProfilePics = styled.img`
+  height: 40px;
+  width: 40px;
+`;
+
+const ValidText = styled.h2`
+  font-size: 22px;
+  color: #147b5c;
+`;
 const LeftContent = styled(Flex)`
   width: 70%;
   padding: 0 1.5em 0 0;
-  border-right: 1px solid #e5e2ed;
+  // border-right: 1px solid #e5e2ed;
   justify-content: center;
   align-items: center;
-  max-height: 70vh;
+  max-height: 100vh;
 
   @media only screen and (${screen.sm}) {
     padding: 30px 0;
@@ -48,6 +74,7 @@ const ImageWrapper = styled.div`
   height: 100%;
   position: relative;
   overflow: hidden;
+  border-radius: 10px;
 `;
 const ErrorAndLoaderWrapper = styled(Flex)`
   justify-content: center;
@@ -62,6 +89,24 @@ const ErrrorText = styled.p`
     width: 70%;
   }
 `;
+
+const ValidateButton = styled.button`
+  border: 2px solid #147b5c;
+  padding: 10px;
+  border-radius: 0;
+  cursor: pointer;
+  padding: 12px 28px;
+  font-weight: bold;
+  color: #147b5c;
+  margin: 0 16px 0 0;
+  background: none;
+
+  &:hover {
+    background: #147b5c;
+    color: #fff;
+  }
+`;
+
 export const fetchInitialData = async () => {
   const response = await apiService("/api/v1/transcribe", "GET");
   if (response.data.session_id) {
@@ -83,10 +128,20 @@ export const FormValidationPage = () => {
   });
 
   return (
-    <HomeTemplate header={<NavBar />} footer={<Footer />}>
+    <HomeTemplate
+      header={<NavBar stats={{ data: initialData, isLoading, isError }} />}
+      footer={<Footer />}
+    >
       <ContentWrapper className="container">
-        <Flex justifyContent="center" padding="10px 0">
+        {/* <Flex justifyContent="center" padding="10px 0">
           <ProgressBar width="40%" value={50} total={2000} />
+        </Flex> */}
+        <Flex justifyContent="space-between" width="55%" padding="7px 0">
+          <UserProfile>
+            <ProfilePics src={Profilepics} alt="Profile" />
+            <UserName>David Agu</UserName>
+          </UserProfile>
+          <ValidText>Validator</ValidText>
         </Flex>
         <Flex>
           {isLoading ? (
@@ -109,17 +164,25 @@ export const FormValidationPage = () => {
                   <VotesDisplay data={initialData.data} />
 
                   <Flex justifyContent="center" direction="column">
-                    <p style={{ textAlign: "center", fontWeight: 500 }}>
+                    <p
+                      style={{
+                        textAlign: "center",
+                        fontSize: "20px",
+                        fontWeight: 500,
+                      }}
+                    >
                       Do you think this list is accurate?
                     </p>
                     <Flex justifyContent="center">
-                      <Button
+                      {/* <Button
                         bgColor="#147b5c"
                         color="#ffffff"
                         text="Yes"
                         margin="0 16px 0 0"
-                      />
-                      <Button bgColor="#147b5c" color="#ffffff" text="No" />
+                      /> */}
+                      <ValidateButton>Yes</ValidateButton>
+                      <ValidateButton>No</ValidateButton>
+                      {/* <Button bgColor="#147b5c" color="#ffffff" text="No" /> */}
                     </Flex>
                   </Flex>
                 </RightContent>
