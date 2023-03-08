@@ -104,6 +104,7 @@ export const FormSection = ({ data }) => {
   const [localGovernments, setLocalGovernments] = useState([]);
   const [pollingUnits, setPollingUnits] = useState([]);
 
+
   const dispatch = useDispatch();
 
   const reloadPage = () => {
@@ -171,13 +172,18 @@ export const FormSection = ({ data }) => {
     const result = await dispatch(pollingUnitsAsync(newValue.id));
     if (result.payload) {
       setPollingUnits(result.payload);
+      
       // do polling unti preselection logic here and setPollingUnit here too
+        setPollingUnit(`${result.payload[1].id} -${result.payload[1].name}`)
+      // console.log('payload',`${result.payload[1].id} -${result.payload[1].name}`)
     }
   };
 
   const handlePollingUnitChange = async (e, newValue) => {
-    setPollingUnit(newValue);
+    setPollingUnit(newValue)
   };
+
+ 
 
   const handleIsFormCorrect = (e) => {
     setIsFormCorrect(e.target.value);
@@ -315,7 +321,7 @@ export const FormSection = ({ data }) => {
             data={data ? serializeStatesData(data.states) : []}
             label="Select state"
             value={state}
-            onChange={handleStateChange}
+            onChange={handleStateChange }
           />
         </DroopdownWrapper>
         {/* <DroopdownWrapper>
