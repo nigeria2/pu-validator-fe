@@ -237,6 +237,38 @@ export const FormSection = ({ data }) => {
 
   return (
     <>
+      <section style={{ margin: "0 0 32px 0" }}>
+        <h3 style={{ margin: "0 0 10px 0" }}>Registration Area</h3>
+        <DroopdownWrapper>
+          <ComboBox
+            data={data ? serializeStatesData(data.states) : []}
+            label="Select state"
+            value={state}
+            onChange={handleStateChange}
+          />
+        </DroopdownWrapper>
+        <DroopdownWrapper>
+          <ComboBox
+            data={
+              localGovernments.length ? serializeLGAData(localGovernments) : []
+            }
+            label="Select LGA"
+            value={lga}
+            onChange={handleLGAChange}
+          />
+        </DroopdownWrapper>
+        <DroopdownWrapper>
+          <ComboBox
+            data={
+              pollingUnits.length ? serializePollingUnitData(pollingUnits) : []
+            }
+            label="Identify polling unit"
+            value={pollingUnit}
+            onChange={handlePollingUnitChange}
+          />
+        </DroopdownWrapper>
+      </section>
+
       <PartiesInputSection>
         {pollValues.map((data, idx) => (
           <div key={idx}>
@@ -260,7 +292,7 @@ export const FormSection = ({ data }) => {
         ))}
       </PartiesInputSection>
 
-      <section style={{ margin: "30px 0 10px 0" }}>
+      <section style={{ margin: "10px 0" }}>
         <p style={{ fontWeight: 500 }}>
           Do you think this form has been tampered with?
         </p>
@@ -297,70 +329,6 @@ export const FormSection = ({ data }) => {
             onChange={handleisNotStamped}
           />
         </div>
-      </section>
-
-      <section>
-        <h3>Registration Area</h3>
-
-        {/* <DroopdownWrapper>
-          <DropDownInput
-            options={data ? serializeStatesData(data.states) : []}
-            label="Select state"
-            value={state}
-            onChange={handleStateChange}
-          />
-        </DroopdownWrapper> */}
-        <DroopdownWrapper>
-          <ComboBox
-            data={data ? serializeStatesData(data.states) : []}
-            label="Select state"
-            value={state}
-            onChange={handleStateChange}
-          />
-        </DroopdownWrapper>
-        {/* <DroopdownWrapper>
-          <DropDownInput
-            options={
-              localGovernments.length
-                ? serializeStatesData(localGovernments)
-                : []
-            }
-            label="Select LGA"
-            value={lga}
-            onChange={handleLGAChange}
-          />
-        </DroopdownWrapper> */}
-        <DroopdownWrapper>
-          <ComboBox
-            data={
-              localGovernments.length ? serializeLGAData(localGovernments) : []
-            }
-            label="Select LGA"
-            value={lga}
-            onChange={handleLGAChange}
-          />
-        </DroopdownWrapper>
-
-        {/* <DroopdownWrapper>
-          <DropDownInput
-            options={
-              pollingUnits.length ? serializeStatesData(pollingUnits) : []
-            }
-            label="Identify polling unit"
-            value={pollingUnit}
-            onChange={handlePollingUnitChange}
-          />
-        </DroopdownWrapper> */}
-        <DroopdownWrapper>
-          <ComboBox
-            data={
-              pollingUnits.length ? serializePollingUnitData(pollingUnits) : []
-            }
-            label="Identify polling unit"
-            value={pollingUnit}
-            onChange={handlePollingUnitChange}
-          />
-        </DroopdownWrapper>
       </section>
 
       <ReCAPTCHA
