@@ -19,7 +19,7 @@ const ContentWrapper = styled(Flex)`
     padding: 10px;
   }
 `;
-const RightContent = styled(Flex)`
+const LeftContent = styled(Flex)`
   width: 70%;
   padding: 0 1.5em 0 0;
   border-right: 1px solid #e5e2ed;
@@ -31,7 +31,7 @@ const RightContent = styled(Flex)`
     width: 100%;
   }
 `;
-const LeftContent = styled(Flex)`
+const RightContent = styled(Flex)`
   width: 30%;
   min-height: 60px;
   /* max-height: 70vh;
@@ -68,7 +68,7 @@ export const fetchInitialData = async () => {
   const response = await apiService("/api/v1/transcribe", "GET");
   if (response.data.session_id) {
     localStorage.setItem("session_id", response.data.session_id);
-    console.log("response data", response.data);
+    // console.log("response data", response.data);
   }
   return response.data;
 };
@@ -90,7 +90,7 @@ export const HomePage = () => {
       footer={<Footer />}
     >
       <ContentWrapper className="container">
-        <RightContent width="70%">
+        <LeftContent width="70%">
           {isLoading ? (
             <ErrorAndLoaderWrapper>
               <Loader type="circle" width="50px" height="50px" />
@@ -107,8 +107,8 @@ export const HomePage = () => {
               // <div></div>
             )
           )}
-        </RightContent>
-        <LeftContent width="30%" direction="column">
+        </LeftContent>
+        <RightContent width="30%" direction="column">
           {isLoading ? (
             <ErrorAndLoaderWrapper>
               <Loader type="circle" width="50px" height="50px" />
@@ -122,7 +122,7 @@ export const HomePage = () => {
           ) : (
             initialData && <FormSection data={initialData.data} />
           )}
-        </LeftContent>
+        </RightContent>
       </ContentWrapper>
       <ShowResults stats={{ data: initialData, isLoading, isError }} />
     </HomeTemplate>

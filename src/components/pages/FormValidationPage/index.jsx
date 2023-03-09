@@ -12,7 +12,9 @@ import ReactPanZoom from "react-image-pan-zoom-rotate";
 import { NavBar } from "../../molecules";
 import { VotesDisplay } from "../../molecules/VotesDisplay";
 // import { Button } from "../../atoms/Button";
-import Profilepics from "../../../assets/svgs/profilepix.svg";
+// import Profilepics from "../../../assets/svgs/profilepix.svg";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../../store/features/auth/authSlice";
 
 const Flex = styled(CustomFlex)`
   @media only screen and (${screen.sm}) {
@@ -50,15 +52,16 @@ const UserProfile = styled.div`
 
 const UserName = styled.h6`
   font-size: 16px;
-  margin: 10px;
+  margin-top: 6px;
   @media only screen and (${screen.sm}) {
     font-size: 14px;
   }
 `;
 
 const ProfilePics = styled.img`
-  height: 40px;
-  width: 40px;
+  height: 45px;
+  width: 45px;
+  border-radius: 100%;
 
   @media only screen and (${screen.sm}) {
     height: 60px;
@@ -152,7 +155,7 @@ export const fetchInitialData = async () => {
   const response = await apiService("/api/v1/transcribe", "GET");
   if (response.data.session_id) {
     localStorage.setItem("session_id", response.data.session_id);
-    console.log("response data", response.data);
+    // console.log("response data", response.data);
   }
   return response.data;
 };
@@ -162,20 +165,16 @@ export const FormValidationPage = () => {
     data: initialData,
     isLoading,
     isError,
-  } = useQuery(["transcribe"], fetchInitialData, {
+  } = useQuery(["form_validation_data"], fetchInitialData, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
+  const user = useSelector(selectUserData);
 
   return (
     <HomeTemplate
-      header={
-        <NavBar
-          justifyContent={"center"}
-          stats={{ data: initialData, isLoading, isError }}
-        />
-      }
+      header={<NavBar justifyContent={"center"} />}
       footer={<Footer />}
     >
       <ContentWrapper className="container">
@@ -183,8 +182,8 @@ export const FormValidationPage = () => {
           <ValidText>Validator</ValidText>
         </Flex>
         <UserProfile>
-          <ProfilePics src={Profilepics} alt="Profile" />
-          <UserName>David Agu</UserName>
+          <ProfilePics src={user?.picture} alt={user.name} />
+          <UserName>{user?.name}</UserName>
           {/* <UserLocation>Lagos State</UserLocation> */}
         </UserProfile>
         <Flex directionSm="column">
