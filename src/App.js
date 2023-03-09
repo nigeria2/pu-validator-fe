@@ -1,10 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { HomePage } from "./components/pages/HomePage";
-import { StatisticsPage } from "./components/pages/StatisticsPage";
+// import { StatisticsPage } from "./components/pages/StatisticsPage";
 import ProtectedRoute from "./utilityComponents";
 import { LoginPage } from "./components/pages/LoginPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { FormValidationPage } from "./components/pages/FormValidationPage";
+import { ResultUnavailablePage } from "./components/pages/ResultUnavailablePage";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/results",
-    element: <StatisticsPage />,
+    element: <ResultUnavailablePage />,
+    // element: <StatisticsPage />,
   },
   {
     path: "/validators",
