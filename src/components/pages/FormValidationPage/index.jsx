@@ -165,22 +165,16 @@ export const FormValidationPage = () => {
     data: initialData,
     isLoading,
     isError,
-  } = useQuery(["transcribe"], fetchInitialData, {
+  } = useQuery(["form_validation_data"], fetchInitialData, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
   const user = useSelector(selectUserData);
-  console.log(user);
 
   return (
     <HomeTemplate
-      header={
-        <NavBar
-          justifyContent={"center"}
-          stats={{ data: initialData, isLoading, isError }}
-        />
-      }
+      header={<NavBar justifyContent={"center"} />}
       footer={<Footer />}
     >
       <ContentWrapper className="container">
