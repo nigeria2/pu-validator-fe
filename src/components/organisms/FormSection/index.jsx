@@ -276,7 +276,8 @@ export const FormSection = ({ data }) => {
         has_corrections:
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
         g_recaptcha_response: recaptchaValue,
-        // is_invalid_form: isNotPresidentialForm,
+        state_id: state.id,
+        lga_id: lga.id,
         is_not_stamped: isNotStamped,
         parties: serializePartiesDataForSubmission(pollValues),
       };
