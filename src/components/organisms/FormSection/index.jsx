@@ -157,7 +157,7 @@ export const FormSection = ({ data }) => {
   }
 
   const reloadPage = () => {
-    window.setTimeout(() => window.location.reload(false), 3000);
+    window.setTimeout(() => window.location.reload(false), 2000);
   };
 
   function handleRecaptcha(value) {
