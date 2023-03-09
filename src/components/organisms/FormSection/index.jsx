@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getLocalGovernmentsAsync } from "../../../store/features/localGovernment";
@@ -31,6 +31,7 @@ import {
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
+import { sanitizeString } from "../../../utils/sanitizeString";
 
 export const partiesInfo = [
   {
@@ -84,7 +85,7 @@ const addScoreKeyToPartyInfo = (parties) => {
 };
 
 export const FormSection = ({ data }) => {
-  // const imageURLArray = data.image.url.split("/");
+  const imageURLArray = data.image.url.split("/");
   // console.log("imageURLArray", imageURLArray);
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
   // const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
@@ -104,68 +105,56 @@ export const FormSection = ({ data }) => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   preSelectState(imageURLArray[5], data.states);
-  // }, []);
+  useEffect(() => {
+    preSelectState(imageURLArray[5], data.states);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // async function preSelectState(key, states) {
-  //   const state = states.find((state) => {
-  //     if (key.includes("-")) {
-  //       const keyArray = key.split("-");
-  //       const newKeyString = keyArray[0] + " " + keyArray[1];
-  //       return state?.name?.toLowerCase() === newKeyString;
-  //     }
-  //     return state?.name?.toLowerCase() === key;
-  //   });
+  async function preSelectState(key, states) {
+    const state = states.find((state) => {
+      return sanitizeString(state?.name) === sanitizeString(key);
+    });
 
-  //   if (state?.id && state?.name) {
-  //     setState({
-  //       id: state?.id,
-  //       label: `${state?.id} - ${state?.name}`,
-  //     });
+    if (state?.id && state?.name) {
+      setState({
+        id: state?.id,
+        label: `${state?.id} - ${state?.name}`,
+      });
 
-  //     const lgaData = await dispatch(getLocalGovernmentsAsync(state.id));
-  //     if (lgaData.payload) {
-  //       const LGAs = lgaData.payload.find((lga) => {
-  //         if (imageURLArray[6].includes("-")) {
-  //           const keyArray = imageURLArray[6].split("-");
+      const lgaData = await dispatch(getLocalGovernmentsAsync(state.id));
+      if (lgaData.payload) {
+        setLocalGovernments(lgaData.payload);
+        const LGAs = lgaData.payload.find((lga) => {
+          return sanitizeString(lga?.name) === sanitizeString(imageURLArray[6]);
+        });
 
-  //           const newKeyString = keyArray[0] + " " + keyArray[1];
-  //           return lga?.name?.toLowerCase() === newKeyString;
-  //         }
+        if (LGAs?.id && LGAs?.name) {
+          setLGA({
+            id: LGAs.id,
+            label: `${LGAs.id} - ${LGAs.name}`,
+          });
 
-  //         return lga?.name?.toLowerCase() === imageURLArray[6];
-  //       });
+          const puData = await dispatch(pollingUnitsAsync(LGAs.id));
+          if (puData.payload) {
+            setPollingUnits(puData.payload);
+            const PUs = puData.payload.find((pollingUnit) => {
+              return (
+                sanitizeString(pollingUnit?.delimitation) ===
+                sanitizeString(imageURLArray[7].split(".")[0])
+              );
+            });
 
-  //       if (LGAs?.id && LGAs?.name) {
-  //         setLGA({
-  //           id: LGAs.id,
-  //           label: `${LGAs.id} - ${LGAs.name}`,
-  //         });
-  //         setLocalGovernments(lgaData.payload);
-
-  //         const puData = await dispatch(pollingUnitsAsync(LGAs.id));
-  //         if (puData.payload) {
-  //           setPollingUnits(puData.payload);
-  //           // console.log("polling units", puData.payload);
-  //           const PUs = puData.payload.find((pollingUnit) => {
-  //             return (
-  //               pollingUnit?.delimitation?.toLowerCase() ===
-  //               imageURLArray[7].split(".")[0]
-  //             );
-  //           });
-
-  //           if (PUs?.id && PUs?.abbreviation && PUs?.name) {
-  //             setPollingUnit({
-  //               id: PUs.id,
-  //               label: `${PUs.abbreviation} - ${PUs.name}`,
-  //             });
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+            if (PUs?.id && PUs?.abbreviation && PUs?.name) {
+              setPollingUnit({
+                id: PUs.id,
+                label: `${PUs.abbreviation} - ${PUs.name}`,
+              });
+            }
+          }
+        }
+      }
+    }
+  }
 
   const reloadPage = () => {
     window.setTimeout(() => window.location.reload(false), 3000);
