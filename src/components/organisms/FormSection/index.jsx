@@ -239,7 +239,7 @@ export const FormSection = ({ data }) => {
   };
 
   const handlePollingUnitChange = async (e, newValue) => {
-    console.log("polling unit", newValue);
+    // console.log("polling unit", newValue);
     setPollingUnit(newValue);
   };
 
