@@ -144,7 +144,6 @@ const ValidateButton = styled.button`
   &:hover {
     background: #147b5c;
     color: #fff;
-    padding: 10px 20px;
   }
 `;
 
