@@ -275,7 +275,7 @@ export const FormSection = ({ data }) => {
         image_id: data.image.id,
         has_corrections:
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
-        g_recaptcha_response: recaptchaValue,
+        // g_recaptcha_response: recaptchaValue,
         state_id: state.id,
         lga_id: lga.id,
         is_not_stamped: isNotStamped,
