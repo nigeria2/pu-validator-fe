@@ -14,13 +14,14 @@ const ButtonWrapper = styled.button`
   margin: ${({ margin }) => margin};
 
   &:hover {
-    color: black;
+    /* color: black; */
+    opacity: 0.8;
   }
 
   &:disabled {
     border: 1px solid #dddddd;
     cursor: not-allowed;
-    color: #8a8a8a;
+    /* color: #8a8a8a; */
   }
 `;
 

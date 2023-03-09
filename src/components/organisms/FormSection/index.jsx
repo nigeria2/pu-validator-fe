@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getLocalGovernmentsAsync } from "../../../store/features/localGovernment";
@@ -84,12 +84,10 @@ const addScoreKeyToPartyInfo = (parties) => {
 };
 
 export const FormSection = ({ data }) => {
-  // const [state, setState] = useState("");
-  // const [lga, setLGA] = useState("");
-  // const [pollingUnit, setPollingUnit] = useState("");
+  const imageURLArray = data.image.url.split("/");
+  // console.log("imageURLArray", imageURLArray);
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
-  const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
-  // const [isUnclear, setIsUnclear] = useState(false);
+  // const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
   const [isNotStamped, setIsNotStamped] = useState(false);
   const [recaptchaDone, setRecaptchaDone] = useState(false);
   const [recaptchaValue, setRecaptchaValue] = useState(null);
@@ -105,6 +103,70 @@ export const FormSection = ({ data }) => {
   const [pollingUnits, setPollingUnits] = useState([]);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    preSelectState(imageURLArray[5], data.states);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function preSelectState(key, states) {
+    const state = states.find((state) => {
+      if (key.includes("-")) {
+        const keyArray = key.split("-");
+        const newKeyString = keyArray[0] + " " + keyArray[1];
+        return state?.name?.toLowerCase() === newKeyString;
+      }
+      return state?.name?.toLowerCase() === key;
+    });
+
+    if (state?.id && state?.name) {
+      setState({
+        id: state?.id,
+        label: `${state?.id} - ${state?.name}`,
+      });
+
+      const lgaData = await dispatch(getLocalGovernmentsAsync(state.id));
+      if (lgaData.payload) {
+        const LGAs = lgaData.payload.find((lga) => {
+          if (imageURLArray[6].includes("-")) {
+            const keyArray = imageURLArray[6].split("-");
+
+            const newKeyString = keyArray[0] + " " + keyArray[1];
+            return lga?.name?.toLowerCase() === newKeyString;
+          }
+
+          return lga?.name?.toLowerCase() === imageURLArray[6];
+        });
+
+        if (LGAs?.id && LGAs?.name) {
+          setLGA({
+            id: LGAs.id,
+            label: `${LGAs.id} - ${LGAs.name}`,
+          });
+          setLocalGovernments(lgaData.payload);
+
+          const puData = await dispatch(pollingUnitsAsync(LGAs.id));
+          if (puData.payload) {
+            setPollingUnits(puData.payload);
+            // console.log("polling units", puData.payload);
+            const PUs = puData.payload.find((pollingUnit) => {
+              return (
+                pollingUnit?.delimitation?.toLowerCase() ===
+                imageURLArray[7].split(".")[0]
+              );
+            });
+
+            if (PUs?.id && PUs?.abbreviation && PUs?.name) {
+              setPollingUnit({
+                id: PUs.id,
+                label: `${PUs.abbreviation} - ${PUs.name}`,
+              });
+            }
+          }
+        }
+      }
+    }
+  }
 
   const reloadPage = () => {
     window.setTimeout(() => window.location.reload(false), 3000);
@@ -140,6 +202,7 @@ export const FormSection = ({ data }) => {
 
   const handleStateChange = async (e, newValue) => {
     setState(newValue);
+    // console.log("newValue", newValue);
     const result = await dispatch(getLocalGovernmentsAsync(newValue.id));
     if (result.payload) {
       setLocalGovernments(result.payload);
@@ -176,6 +239,7 @@ export const FormSection = ({ data }) => {
   };
 
   const handlePollingUnitChange = async (e, newValue) => {
+    // console.log("polling unit", newValue);
     setPollingUnit(newValue);
   };
 
@@ -183,9 +247,9 @@ export const FormSection = ({ data }) => {
     setIsFormCorrect(e.target.value);
   };
 
-  const handleisNotPresidentialForm = () => {
-    setIsNotPresidentialForm((prev) => !prev);
-  };
+  // const handleisNotPresidentialForm = () => {
+  //   setIsNotPresidentialForm((prev) => !prev);
+  // };
 
   // const handleisUnclear = () => {
   //   setIsUnclear((prev) => !prev);
@@ -213,7 +277,7 @@ export const FormSection = ({ data }) => {
         has_corrections:
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
         g_recaptcha_response: recaptchaValue,
-        is_invalid_form: isNotPresidentialForm,
+        // is_invalid_form: isNotPresidentialForm,
         is_not_stamped: isNotStamped,
         parties: serializePartiesDataForSubmission(pollValues),
       };
@@ -237,6 +301,38 @@ export const FormSection = ({ data }) => {
 
   return (
     <>
+      <section style={{ margin: "0 0 32px 0" }}>
+        <h3 style={{ margin: "0 0 10px 0" }}>Registration Area</h3>
+        <DroopdownWrapper>
+          <ComboBox
+            data={data ? serializeStatesData(data.states) : []}
+            label="Select state"
+            value={state}
+            onChange={handleStateChange}
+          />
+        </DroopdownWrapper>
+        <DroopdownWrapper>
+          <ComboBox
+            data={
+              localGovernments.length ? serializeLGAData(localGovernments) : []
+            }
+            label="Select LGA"
+            value={lga}
+            onChange={handleLGAChange}
+          />
+        </DroopdownWrapper>
+        <DroopdownWrapper>
+          <ComboBox
+            data={
+              pollingUnits.length ? serializePollingUnitData(pollingUnits) : []
+            }
+            label="Identify polling unit"
+            value={pollingUnit}
+            onChange={handlePollingUnitChange}
+          />
+        </DroopdownWrapper>
+      </section>
+
       <PartiesInputSection>
         {pollValues.map((data, idx) => (
           <div key={idx}>
@@ -260,7 +356,7 @@ export const FormSection = ({ data }) => {
         ))}
       </PartiesInputSection>
 
-      <section style={{ margin: "30px 0 10px 0" }}>
+      <section style={{ margin: "10px 0" }}>
         <p style={{ fontWeight: 500 }}>
           Do you think this form has been tampered with?
         </p>
@@ -278,12 +374,12 @@ export const FormSection = ({ data }) => {
             value={false}
             onChange={handleIsFormCorrect}
           />
-          <CheckBox
+          {/* <CheckBox
             name="isNotPresidentialForm"
             label="This is not a presidential form"
             value={isNotPresidentialForm}
             onChange={handleisNotPresidentialForm}
-          />
+          /> */}
           {/* <CheckBox
             name="isUnclear"
             label="This document is unclear"
@@ -299,72 +395,8 @@ export const FormSection = ({ data }) => {
         </div>
       </section>
 
-      <section>
-        <h3>Registration Area</h3>
-
-        {/* <DroopdownWrapper>
-          <DropDownInput
-            options={data ? serializeStatesData(data.states) : []}
-            label="Select state"
-            value={state}
-            onChange={handleStateChange}
-          />
-        </DroopdownWrapper> */}
-        <DroopdownWrapper>
-          <ComboBox
-            data={data ? serializeStatesData(data.states) : []}
-            label="Select state"
-            value={state}
-            onChange={handleStateChange}
-          />
-        </DroopdownWrapper>
-        {/* <DroopdownWrapper>
-          <DropDownInput
-            options={
-              localGovernments.length
-                ? serializeStatesData(localGovernments)
-                : []
-            }
-            label="Select LGA"
-            value={lga}
-            onChange={handleLGAChange}
-          />
-        </DroopdownWrapper> */}
-        <DroopdownWrapper>
-          <ComboBox
-            data={
-              localGovernments.length ? serializeLGAData(localGovernments) : []
-            }
-            label="Select LGA"
-            value={lga}
-            onChange={handleLGAChange}
-          />
-        </DroopdownWrapper>
-
-        {/* <DroopdownWrapper>
-          <DropDownInput
-            options={
-              pollingUnits.length ? serializeStatesData(pollingUnits) : []
-            }
-            label="Identify polling unit"
-            value={pollingUnit}
-            onChange={handlePollingUnitChange}
-          />
-        </DroopdownWrapper> */}
-        <DroopdownWrapper>
-          <ComboBox
-            data={
-              pollingUnits.length ? serializePollingUnitData(pollingUnits) : []
-            }
-            label="Identify polling unit"
-            value={pollingUnit}
-            onChange={handlePollingUnitChange}
-          />
-        </DroopdownWrapper>
-      </section>
-
       <ReCAPTCHA
-        sitekey="6LdDYt0kAAAAABwNyU8Gd6YfZMbAQ1O6qRU3TyK0"
+        sitekey={process.env.REACT_APP_RECAPTCHA_PUBLIC_KEY}
         onChange={handleRecaptcha}
       />
 
