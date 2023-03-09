@@ -15,13 +15,20 @@ globalAxios.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 419) {
-      toast.success("😎 We knew you'd come!!!");
+      toast.success("😎 Session expired!!!");
     }
     if (error.response.status === 503) {
       toast.error(
         "we are currently upgrading/improving our setup... try again shortly"
       );
     }
+    if (error.response.status === 422) {
+      toast.error("Form validation error. Please cross-check your inputs");
+    }
+    if (error.response.status === 429) {
+      toast.error("Take a deep breathe... 🥵 too many requests in a minute");
+    }
+
     return Promise.reject(error);
   }
 );
