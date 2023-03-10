@@ -1,12 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { NavBar } from "../../molecules";
 
 export const Header = ({ stats }) => {
   return (
     <StyledHeaderWrapper className="container">
-      <NavBar stats={stats} />
-
       <StyledInstructionBox>
         <h2>INSTRUCTIONS</h2>
 

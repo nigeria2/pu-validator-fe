@@ -17,7 +17,7 @@ const ProgressWrapper = styled.div`
 const ProgressElement = styled.div`
   width: ${({ width }) => width};
   height: 15px;
-  background-color: #147b5c;
+  background-color: ${({ progressColor }) => progressColor || "#147b5c"};
   border-radius: 50px;
   position: relative;
 `;
@@ -33,7 +33,7 @@ const StatusValueText = styled.p`
   white-space: nowrap;
 `;
 
-export const ProgressBar = ({ value, total, width }) => {
+export const ProgressBar = ({ value, total, width, progressColor }) => {
   const percentageOfCompletion = (value / total) * 100;
   const displayFigure =
     percentageOfCompletion % 2 === 0
@@ -53,7 +53,10 @@ export const ProgressBar = ({ value, total, width }) => {
       <StatusValueText top="7px" color="black">
         {formatNumber(total - value)} to go
       </StatusValueText>
-      <ProgressElement width={`${displayFigure}%`}>
+      <ProgressElement
+        width={`${displayFigure}%`}
+        progressColor={progressColor}
+      >
         <StatusValueText {...innerTextProps}>{displayFigure}%</StatusValueText>
         <StatusValueText {...leftStatusTextProps} color="black">
           {formatNumber(value)} transcribed

@@ -6,53 +6,83 @@ import { SilentLink } from "../../atoms/SilentLink";
 import { screen } from "../../theme/utils";
 import { Loader } from "../../atoms/Loader";
 import { ProgressBar } from "../../atoms/ProgressBar";
+import apiService from "../../../api-utils/api-service";
+import { useQuery } from "@tanstack/react-query";
 
 const Wrapper = styled(Flex)`
   background-color: #ffffff;
   height: 60px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-
-  @media only screen and (${screen.sm}) {
-    justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
-  }
 `;
 const ProgressBarContainer = styled.div`
   width: 25%;
-  position: absolute;
-  right: 10px;
-  top: 11px;
-
   @media only screen and (${screen.sm}) {
-    width: 40%;
+    width: 30%;
   }
 `;
 
+export const fetchInitialData = async () => {
+  const response = await apiService("/api/v1/transcribe", "GET");
+  if (response.data.session_id) {
+    localStorage.setItem("session_id", response.data.session_id);
+    // console.log("response data", response.data);
+  }
+  return response.data;
+};
+
 export const NavBar = ({ justifyContent, stats }) => {
+  const {
+    data: initialData,
+    isLoading,
+    isError,
+  } = useQuery(["transcribe2"], fetchInitialData, {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
+
   return (
     <Wrapper justifyContent={justifyContent} className="container">
-      {stats.isLoading ? (
+      {isLoading ? (
         <Loader type="circle" />
-      ) : stats.isError ? (
+      ) : isError ? (
         <p>Error</p>
       ) : (
-        stats.data && (
+        initialData && (
           <ProgressBarContainer>
             <ProgressBar
-              value={stats?.data?.data?.statistics?.total_results}
-              total={stats?.data?.data?.statistics?.total_images}
+              value={initialData.data?.statistics?.total_results}
+              total={initialData.data?.statistics?.total_images}
             />
           </ProgressBarContainer>
         )
       )}
-      <div>
-        <LogoSvg width="32px" height="32px" />
-      </div>
-      <SilentLink to="/">
-        <h3 style={{ margin: "0", padding: "0" }}>Validation</h3>
-      </SilentLink>
+      <Flex alignItems="center">
+        <div>
+          <LogoSvg width="32px" height="32px" />
+        </div>
+        <SilentLink to="/">
+          <h3 style={{ margin: "0", padding: "0" }}>Validation</h3>
+        </SilentLink>
+      </Flex>
+      {isLoading ? (
+        <Loader type="circle" />
+      ) : isError ? (
+        <p>Error</p>
+      ) : (
+        initialData && (
+          <ProgressBarContainer>
+            <ProgressBar
+              value={initialData.data?.statistics?.total_results}
+              total={initialData.data?.statistics?.total_images}
+              progressColor="#F58D53"
+            />
+          </ProgressBarContainer>
+        )
+      )}
     </Wrapper>
   );
 };

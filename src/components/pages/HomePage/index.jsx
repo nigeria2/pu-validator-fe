@@ -10,6 +10,7 @@ import apiService from "../../../api-utils/api-service";
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "../../atoms/Loader";
 import ReactPanZoom from "react-image-pan-zoom-rotate";
+import { NavBar } from "../../molecules";
 
 const ContentWrapper = styled(Flex)`
   padding: 30px 0;
@@ -86,7 +87,12 @@ export const HomePage = () => {
 
   return (
     <HomeTemplate
-      header={<Header stats={{ data: initialData, isLoading, isError }} />}
+      header={
+        <>
+          <NavBar />
+          <Header />
+        </>
+      }
       footer={<Footer />}
     >
       <ContentWrapper className="container">
