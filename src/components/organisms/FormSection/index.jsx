@@ -86,9 +86,9 @@ const addScoreKeyToPartyInfo = (parties) => {
 
 export const FormSection = ({ data, refetch }) => {
   const imageURLArray = data.image.url.split("/");
-  // console.log("imageURLArray", imageURLArray);
+  const puDelim = imageURLArray[7].split(".")[0];
+  // const puID = puDelim.split("-");
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
-  // const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
   const [isNotStamped, setIsNotStamped] = useState(false);
   const [recaptchaDone, setRecaptchaDone] = useState(false);
   const [recaptchaValue, setRecaptchaValue] = useState(null);
@@ -104,6 +104,10 @@ export const FormSection = ({ data, refetch }) => {
   const [pollingUnits, setPollingUnits] = useState([]);
 
   const dispatch = useDispatch();
+
+  const refetchData = () => {
+    window.setTimeout(() => refetch(), 2000);
+  };
 
   function handleRecaptcha(value) {
     if (value) {
@@ -146,7 +150,7 @@ export const FormSection = ({ data, refetch }) => {
     const response = await dispatch(markImageAsUnclearAsync(data.image.id));
     if (response.payload) {
       toast.success("Fetching new image...");
-      refetch();
+      refetchData();
     } else {
       toast.error("Failed to mark image as unclear");
     }
@@ -156,7 +160,7 @@ export const FormSection = ({ data, refetch }) => {
     const response = await dispatch(markImageAsInvalidAsync(data.image.id));
     if (response.payload) {
       toast.success("Fetching new image...");
-      refetch();
+      refetchData();
     } else {
       toast.error("Failed to flag image as invalid");
     }
@@ -226,7 +230,7 @@ export const FormSection = ({ data, refetch }) => {
           localStorage.setItem("session_id", response.payload.session_id);
 
         toast.success("Data submitted successfully");
-        refetch();
+        refetchData();
       } else {
         toast.error("An error occured!");
       }
@@ -244,6 +248,9 @@ export const FormSection = ({ data, refetch }) => {
             value={state}
             onChange={handleStateChange}
           />
+          <p style={{ fontWeight: 500, fontStyle: "italic" }}>
+            State detected : {imageURLArray[5]}
+          </p>
         </DroopdownWrapper>
         <DroopdownWrapper>
           <ComboBox
@@ -254,6 +261,9 @@ export const FormSection = ({ data, refetch }) => {
             value={lga}
             onChange={handleLGAChange}
           />
+          <p style={{ fontWeight: 500, fontStyle: "italic" }}>
+            LGA detected : {imageURLArray[6]}
+          </p>
         </DroopdownWrapper>
         <DroopdownWrapper>
           <ComboBox
@@ -264,6 +274,9 @@ export const FormSection = ({ data, refetch }) => {
             value={pollingUnit}
             onChange={handlePollingUnitChange}
           />
+          <p style={{ fontWeight: 500, fontStyle: "italic" }}>
+            Polling unit: {puDelim}
+          </p>
         </DroopdownWrapper>
       </section>
 

@@ -155,8 +155,8 @@ export const FormSectionV2 = ({ data, refetch }) => {
     }
   }
 
-  // const reloadPage = () => {
-  //   window.setTimeout(() => window.location.reload(false), 2000);
+  // const refetchData = () => {
+  //   window.setTimeout(() => refetch(), 2000);
   // };
 
   function handleRecaptcha(value) {
@@ -200,7 +200,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
     // const response = await dispatch(markImageAsUnclearAsync(data.image.id));
     // if (response.payload) {
     //   toast.success("Fetching new image...");
-    //   refetch();
+    //   refetchData();
     // } else {
     //   toast.error("Failed to mark image as unclear");
     // }
@@ -211,7 +211,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
     // const response = await dispatch(markImageAsInvalidAsync(data.image.id));
     // if (response.payload) {
     //   toast.success("Fetching new image...");
-    //   refetch();
+    //   refetchData();
     // } else {
     //   toast.error("Failed to flag image as invalid");
     // }
