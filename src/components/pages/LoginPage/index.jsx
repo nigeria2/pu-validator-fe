@@ -46,7 +46,7 @@ export const LoginPage = () => {
   async function handleResponse(response) {
     let userObject = jwtDecode(response.credential);
     await dispatch(setUser(userObject));
-    navigate("/validators");
+    navigate("/e07bd8fe-0bba-47a1-b355-3af071dd7968");
   }
 
   return (
