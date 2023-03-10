@@ -2,7 +2,7 @@ import React from "react";
 import { HomeTemplate } from "../../templates/HomeTemplate";
 import { Footer } from "../../molecules/Footer";
 import { ShowResults } from "../../molecules/ShowResults";
-import { FormSection, Header } from "../../organisms";
+import { Header } from "../../organisms";
 import styled from "styled-components";
 import { Flex } from "../../atoms";
 import { screen } from "../../theme/utils";
@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader } from "../../atoms/Loader";
 import ReactPanZoom from "react-image-pan-zoom-rotate";
 import { NavBar } from "../../molecules";
+import { FormSectionV2 } from "../../organisms/FormSectionV2";
 
 const ContentWrapper = styled(Flex)`
   gap: 1em;
@@ -126,7 +127,7 @@ export const TranscriptionV2Page = () => {
               </ErrrorText>
             </ErrorAndLoaderWrapper>
           ) : (
-            initialData && <FormSection data={initialData.data} />
+            initialData && <FormSectionV2 data={initialData.data} />
           )}
         </RightContent>
       </ContentWrapper>
