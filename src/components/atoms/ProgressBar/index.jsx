@@ -20,6 +20,10 @@ const ProgressElement = styled.div`
   background-color: ${({ progressColor }) => progressColor || "#147b5c"};
   border-radius: 50px;
   position: relative;
+
+  @media only screen and (${screen.sm}) {
+    height: 12px;
+  }
 `;
 const StatusValueText = styled.p`
   position: absolute;
@@ -31,6 +35,11 @@ const StatusValueText = styled.p`
   font-size: 0.65rem;
   color: ${({ color }) => color || "#147B5C"};
   white-space: nowrap;
+
+  @media only screen and (${screen.sm}) {
+    font-size: 0.55rem;
+    top: ${({ top }) => top || "-8px"};
+  }
 `;
 
 export const ProgressBar = ({ value, total, width, progressColor }) => {
