@@ -4,6 +4,8 @@ import { ReactComponent as LogoSvg } from "../../../assets/svgs/v_logo.svg";
 import { Flex } from "../../atoms";
 import { SilentLink } from "../../atoms/SilentLink";
 import { screen } from "../../theme/utils";
+import { Loader } from "../../atoms/Loader";
+import { ProgressBar } from "../../atoms/ProgressBar";
 
 const Wrapper = styled(Flex)`
   background-color: #ffffff;
@@ -17,10 +19,34 @@ const Wrapper = styled(Flex)`
     justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
   }
 `;
+const ProgressBarContainer = styled.div`
+  width: 25%;
+  position: absolute;
+  right: 10px;
+  top: 11px;
 
-export const NavBar = ({ justifyContent }) => {
+  @media only screen and (${screen.sm}) {
+    width: 40%;
+  }
+`;
+
+export const NavBar = ({ justifyContent, stats }) => {
   return (
     <Wrapper justifyContent={justifyContent} className="container">
+      {stats.isLoading ? (
+        <Loader type="circle" />
+      ) : stats.isError ? (
+        <p>Error</p>
+      ) : (
+        stats.data && (
+          <ProgressBarContainer>
+            <ProgressBar
+              value={stats?.data?.data?.statistics?.total_results}
+              total={stats?.data?.data?.statistics?.total_images}
+            />
+          </ProgressBarContainer>
+        )
+      )}
       <div>
         <LogoSvg width="32px" height="32px" />
       </div>
