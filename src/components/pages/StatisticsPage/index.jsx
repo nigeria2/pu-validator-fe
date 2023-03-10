@@ -10,7 +10,11 @@ import { Loader } from "../../atoms/Loader";
 import { SilentLink } from "../../atoms/SilentLink";
 
 const fetchResultsData = async (stateId) => {
-  const response = await apiService(`/api/v1/results`, "GET");
+  // const response = await apiService(`/api/v1/results`, "GET");
+  const response = await apiService(
+    `/api/v1/dd3db7f5-5dca-4c15-897d-df6d89f13939/results`,
+    "GET"
+  );
   return response?.data?.data;
 };
 

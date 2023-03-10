@@ -30,7 +30,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/onlyus",
+    path: "/e07bd8fe-0bba-47a1-b355-3af071dd7968",
     element: (
       <ProtectedRoute>
         <StatisticsPage />
