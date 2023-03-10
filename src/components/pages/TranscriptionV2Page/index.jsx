@@ -80,7 +80,7 @@ export const TranscriptionV2Page = () => {
     data: initialData,
     isLoading,
     isError,
-  } = useQuery(["transcribe"], fetchInitialData, {
+  } = useQuery(["transcribev2"], fetchInitialData, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
