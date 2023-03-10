@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { HomePage } from "./components/pages/HomePage";
-// import { StatisticsPage } from "./components/pages/StatisticsPage";
+import { StatisticsPage } from "./components/pages/StatisticsPage";
 import ProtectedRoute from "./utilityComponents";
 import { LoginPage } from "./components/pages/LoginPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -26,6 +26,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <FormValidationPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/onlyus",
+    element: (
+      <ProtectedRoute>
+        <StatisticsPage />
       </ProtectedRoute>
     ),
   },
