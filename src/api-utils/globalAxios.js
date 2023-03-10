@@ -19,6 +19,11 @@ globalAxios.interceptors.response.use(
         toastId: error.response.status,
       });
     }
+    if (error.response.status === 404) {
+      toast.success("😎 You are trying to access a resource we don't have!", {
+        toastId: error.response.status,
+      });
+    }
     if (error.response.status === 503) {
       toast.error(
         "we are currently upgrading/improving our setup... try again shortly",
