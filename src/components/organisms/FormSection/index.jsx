@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getLocalGovernmentsAsync } from "../../../store/features/localGovernment";
@@ -31,7 +31,7 @@ import {
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
-import { sanitizeString } from "../../../utils/sanitizeString";
+// import { sanitizeString } from "../../../utils/sanitizeString";
 
 export const partiesInfo = [
   {
