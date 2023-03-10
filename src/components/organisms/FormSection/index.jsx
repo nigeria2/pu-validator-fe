@@ -84,7 +84,7 @@ const addScoreKeyToPartyInfo = (parties) => {
   });
 };
 
-export const FormSection = ({ data }) => {
+export const FormSection = ({ data, refetch }) => {
   const imageURLArray = data.image.url.split("/");
   // console.log("imageURLArray", imageURLArray);
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
@@ -108,7 +108,7 @@ export const FormSection = ({ data }) => {
   useEffect(() => {
     preSelectState(imageURLArray[5], data.states);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [data]);
 
   async function preSelectState(key, states) {
     const state = states.find((state) => {
@@ -156,10 +156,6 @@ export const FormSection = ({ data }) => {
     }
   }
 
-  const reloadPage = () => {
-    window.setTimeout(() => window.location.reload(false), 2000);
-  };
-
   function handleRecaptcha(value) {
     if (value) {
       setRecaptchaValue(value);
@@ -201,7 +197,7 @@ export const FormSection = ({ data }) => {
     const response = await dispatch(markImageAsUnclearAsync(data.image.id));
     if (response.payload) {
       toast.success("Fetching new image...");
-      reloadPage();
+      refetch();
     } else {
       toast.error("Failed to mark image as unclear");
     }
@@ -211,7 +207,7 @@ export const FormSection = ({ data }) => {
     const response = await dispatch(markImageAsInvalidAsync(data.image.id));
     if (response.payload) {
       toast.success("Fetching new image...");
-      reloadPage();
+      refetch();
     } else {
       toast.error("Failed to flag image as invalid");
     }
@@ -281,7 +277,7 @@ export const FormSection = ({ data }) => {
           localStorage.setItem("session_id", response.payload.session_id);
 
         toast.success("Data submitted successfully");
-        reloadPage();
+        refetch();
       } else {
         toast.error("An error occured!");
       }
