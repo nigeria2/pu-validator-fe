@@ -23,11 +23,10 @@ import adpImg from "../../../assets/svgs/adp.svg";
 import apgaImg from "../../../assets/svgs/apga.svg";
 import lpImg from "../../../assets/svgs/lp.svg";
 import nnpcImg from "../../../assets/svgs/nnpp.svg";
-import {
-  markImageAsInvalidAsync,
-  markImageAsUnclearAsync,
-  // storeTranscribedDataAsync,
-} from "../../../store/features/transcribe";
+import // markImageAsInvalidAsync,
+// markImageAsUnclearAsync,
+// storeTranscribedDataAsync,
+"../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
@@ -84,7 +83,7 @@ const addScoreKeyToPartyInfo = (parties) => {
   });
 };
 
-export const FormSectionV2 = ({ data }) => {
+export const FormSectionV2 = ({ data, refetch }) => {
   const imageURLArray = data.image.url.split("/");
   // console.log("imageURLArray", imageURLArray);
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
@@ -156,9 +155,9 @@ export const FormSectionV2 = ({ data }) => {
     }
   }
 
-  const reloadPage = () => {
-    window.setTimeout(() => window.location.reload(false), 2000);
-  };
+  // const reloadPage = () => {
+  //   window.setTimeout(() => window.location.reload(false), 2000);
+  // };
 
   function handleRecaptcha(value) {
     if (value) {
@@ -198,23 +197,25 @@ export const FormSectionV2 = ({ data }) => {
   };
 
   const markImageAsUnclear = async () => {
-    const response = await dispatch(markImageAsUnclearAsync(data.image.id));
-    if (response.payload) {
-      toast.success("Fetching new image...");
-      reloadPage();
-    } else {
-      toast.error("Failed to mark image as unclear");
-    }
+    // const response = await dispatch(markImageAsUnclearAsync(data.image.id));
+    // if (response.payload) {
+    //   toast.success("Fetching new image...");
+    //   refetch();
+    // } else {
+    //   toast.error("Failed to mark image as unclear");
+    // }
+    toast.error("You cannot perform this action yet");
   };
 
   const markImageAsInvalid = async () => {
-    const response = await dispatch(markImageAsInvalidAsync(data.image.id));
-    if (response.payload) {
-      toast.success("Fetching new image...");
-      reloadPage();
-    } else {
-      toast.error("Failed to flag image as invalid");
-    }
+    // const response = await dispatch(markImageAsInvalidAsync(data.image.id));
+    // if (response.payload) {
+    //   toast.success("Fetching new image...");
+    //   refetch();
+    // } else {
+    //   toast.error("Failed to flag image as invalid");
+    // }
+    toast.error("You cannot perform this action yet");
   };
 
   const handleLGAChange = async (e, newValue) => {

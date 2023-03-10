@@ -80,6 +80,7 @@ export const TranscriptionV2Page = () => {
     data: initialData,
     isLoading,
     isError,
+    refetch,
   } = useQuery(["transcribev2"], fetchInitialData, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -127,7 +128,9 @@ export const TranscriptionV2Page = () => {
               </ErrrorText>
             </ErrorAndLoaderWrapper>
           ) : (
-            initialData && <FormSectionV2 data={initialData.data} />
+            initialData && (
+              <FormSectionV2 data={initialData.data} refetch={refetch} />
+            )
           )}
         </RightContent>
       </ContentWrapper>
