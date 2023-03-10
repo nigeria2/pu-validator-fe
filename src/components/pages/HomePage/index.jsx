@@ -79,6 +79,7 @@ export const HomePage = () => {
     data: initialData,
     isLoading,
     isError,
+    refetch,
   } = useQuery(["transcribe"], fetchInitialData, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -126,7 +127,9 @@ export const HomePage = () => {
               </ErrrorText>
             </ErrorAndLoaderWrapper>
           ) : (
-            initialData && <FormSection data={initialData.data} />
+            initialData && (
+              <FormSection data={initialData.data} refetch={refetch} />
+            )
           )}
         </RightContent>
       </ContentWrapper>
