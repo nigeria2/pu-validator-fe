@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getLocalGovernmentsAsync } from "../../../store/features/localGovernment";
@@ -31,7 +31,7 @@ import {
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
-import { sanitizeString } from "../../../utils/sanitizeString";
+// import { sanitizeString } from "../../../utils/sanitizeString";
 
 export const partiesInfo = [
   {
@@ -85,10 +85,8 @@ const addScoreKeyToPartyInfo = (parties) => {
 };
 
 export const FormSection = ({ data, refetch }) => {
-  const imageURLArray = data.image.url.split("/");
-  // console.log("imageURLArray", imageURLArray);
+  const puDelim = data.image.url.split("/")[7].split(".")[0].split("-");
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
-  // const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
   const [isNotStamped, setIsNotStamped] = useState(false);
   const [recaptchaDone, setRecaptchaDone] = useState(false);
   const [recaptchaValue, setRecaptchaValue] = useState(null);
@@ -105,56 +103,9 @@ export const FormSection = ({ data, refetch }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    preSelectState(imageURLArray[5], data.states);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
-
-  async function preSelectState(key, states) {
-    const state = states.find((state) => {
-      return sanitizeString(state?.name) === sanitizeString(key);
-    });
-
-    if (state?.id && state?.name) {
-      setState({
-        id: state?.id,
-        label: `${state?.id} - ${state?.name}`,
-      });
-
-      const lgaData = await dispatch(getLocalGovernmentsAsync(state.id));
-      if (lgaData.payload) {
-        setLocalGovernments(lgaData.payload);
-        const LGAs = lgaData.payload.find((lga) => {
-          return sanitizeString(lga?.name) === sanitizeString(imageURLArray[6]);
-        });
-
-        if (LGAs?.id && LGAs?.name) {
-          setLGA({
-            id: LGAs.id,
-            label: `${LGAs.id} - ${LGAs.name}`,
-          });
-
-          const puData = await dispatch(pollingUnitsAsync(LGAs.id));
-          if (puData.payload) {
-            setPollingUnits(puData.payload);
-            const PUs = puData.payload.find((pollingUnit) => {
-              return (
-                sanitizeString(pollingUnit?.delimitation) ===
-                sanitizeString(imageURLArray[7].split(".")[0])
-              );
-            });
-
-            if (PUs?.id && PUs?.abbreviation && PUs?.name) {
-              setPollingUnit({
-                id: PUs.id,
-                label: `${PUs.abbreviation} - ${PUs.name}`,
-              });
-            }
-          }
-        }
-      }
-    }
-  }
+  const refetchData = () => {
+    window.setTimeout(() => refetch(), 2000);
+  };
 
   function handleRecaptcha(value) {
     if (value) {
@@ -197,7 +148,7 @@ export const FormSection = ({ data, refetch }) => {
     const response = await dispatch(markImageAsUnclearAsync(data.image.id));
     if (response.payload) {
       toast.success("Fetching new image...");
-      refetch();
+      refetchData();
     } else {
       toast.error("Failed to mark image as unclear");
     }
@@ -207,7 +158,7 @@ export const FormSection = ({ data, refetch }) => {
     const response = await dispatch(markImageAsInvalidAsync(data.image.id));
     if (response.payload) {
       toast.success("Fetching new image...");
-      refetch();
+      refetchData();
     } else {
       toast.error("Failed to flag image as invalid");
     }
@@ -277,7 +228,7 @@ export const FormSection = ({ data, refetch }) => {
           localStorage.setItem("session_id", response.payload.session_id);
 
         toast.success("Data submitted successfully");
-        refetch();
+        refetchData();
       } else {
         toast.error("An error occured!");
       }
@@ -315,6 +266,11 @@ export const FormSection = ({ data, refetch }) => {
             value={pollingUnit}
             onChange={handlePollingUnitChange}
           />
+          <p style={{ fontWeight: 500, fontStyle: "italic" }}>
+            {/* puDelim */}
+            Detected: State ({puDelim[0]}) - LGA ({puDelim[1]}) - Polling unit:
+            ({puDelim[3]})
+          </p>
         </DroopdownWrapper>
       </section>
 
