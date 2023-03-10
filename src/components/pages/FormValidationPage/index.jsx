@@ -1,5 +1,5 @@
 import React from "react";
-import { HomeTemplate as CustomHomeTemplate } from "../../templates/HomeTemplate";
+import { HomeTemplate } from "../../templates/HomeTemplate";
 import { Footer } from "../../molecules/Footer";
 // import { ShowResults } from "../../molecules/ShowResults";
 import styled from "styled-components";
@@ -11,17 +11,10 @@ import { Loader } from "../../atoms/Loader";
 import ReactPanZoom from "react-image-pan-zoom-rotate";
 import { NavBar } from "../../molecules";
 import { VotesDisplay } from "../../molecules/VotesDisplay";
-// import { Button } from "../../atoms/Button";
-// import Profilepics from "../../../assets/svgs/profilepix.svg";
 import { useSelector } from "react-redux";
 import { selectUserData } from "../../../store/features/auth/authSlice";
 import { ProgressBar } from "../../atoms/ProgressBar";
 
-const HomeTemplate = styled(CustomHomeTemplate)`
-  @media only screen and (${screen.sm}) {
-    position: relative;
-  }
-`;
 const Flex = styled(CustomFlex)`
   @media only screen and (${screen.sm}) {
     flex-direction: ${({ directionSm }) => directionSm};
@@ -53,9 +46,9 @@ const ContentWrapper = styled.div`
 
 const UserProfileParent = styled.div`
   position: absolute;
-  top: 0;
-  margin-bottom: 10px;
+  top: 16px;
   @media only screen and (${screen.sm}) {
+    top: 0;
     position: relative;
     display: grid;
     width: 100%;
@@ -73,15 +66,15 @@ const UserProfile = styled.div`
   }
 `;
 
-const UserName = styled.h6`
-  font-size: 16px;
-  margin-top: 6px;
-  @media only screen and (${screen.sm}) {
-    font-size: 14px;
-    margin-bottom: 2px;
-    display: none;
-  }
-`;
+// const UserName = styled.h6`
+//   font-size: 16px;
+//   margin-top: 6px;
+//   @media only screen and (${screen.sm}) {
+//     font-size: 14px;
+//     margin-bottom: 2px;
+//     display: none;
+//   }
+// `;
 
 const ProfilePics = styled.img`
   height: 45px;
@@ -89,8 +82,8 @@ const ProfilePics = styled.img`
   border-radius: 100%;
 
   @media only screen and (${screen.sm}) {
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
   }
 `;
 
@@ -224,11 +217,14 @@ export const FormValidationPage = () => {
   const user = useSelector(selectUserData);
 
   return (
-    <HomeTemplate footer={<Footer />}>
-      <HeaderLogo>
-        <NavBar justifyContent={"flex-start"} />
-      </HeaderLogo>
-
+    <HomeTemplate
+      header={
+        <HeaderLogo>
+          <NavBar justifyContent={"flex-start"} />
+        </HeaderLogo>
+      }
+      footer={<Footer />}
+    >
       <ContentWrapper className="container">
         <ValidText>
           <Flex justifyContent="center" padding="7px 0">
@@ -250,7 +246,7 @@ export const FormValidationPage = () => {
               <UserProfileParent>
                 <UserProfile>
                   <ProfilePics src={user?.picture} alt={user.name} />
-                  <UserName>{user?.name}</UserName>
+                  {/* <UserName>{user?.name}</UserName> */}
                 </UserProfile>
               </UserProfileParent>
 
@@ -314,7 +310,7 @@ export const FormValidationPage = () => {
                       <Checks>
                         <p
                           style={{
-                            fontSize: "20px",
+                            fontSize: "15px",
                             fontWeight: 500,
                           }}
                         >
@@ -339,7 +335,7 @@ export const FormValidationPage = () => {
                     <p
                       style={{
                         textAlign: "center",
-                        fontSize: "20px",
+                        fontSize: "15px",
                         fontWeight: 500,
                       }}
                     >
