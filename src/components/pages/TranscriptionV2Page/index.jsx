@@ -21,8 +21,7 @@ const ContentWrapper = styled(Flex)`
 `;
 const LeftContent = styled(Flex)`
   width: 70%;
-  /* padding: 0 1.5em 0 0; */
-  border-right: 1px solid #e5e2ed;
+  /* border-right: 1px solid #e5e2ed; */
   justify-content: center;
   align-items: center;
 
@@ -48,9 +47,10 @@ const RightContent = styled(Flex)`
 const ImageWrapper = styled.div`
   width: 100%;
   height: 100%;
-  border-radius: 20px;
   position: relative;
   overflow: hidden;
+  border: 10px solid #f58d53;
+  border-radius: 20px;
 `;
 const ErrorAndLoaderWrapper = styled(Flex)`
   justify-content: center;
@@ -74,7 +74,7 @@ export const fetchInitialData = async () => {
   return response.data;
 };
 
-export const HomePage = () => {
+export const TranscriptionV2Page = () => {
   const {
     data: initialData,
     isLoading,

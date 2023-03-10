@@ -24,6 +24,7 @@ export const StyledInstructionBox = styled.div`
   background: #fafaf5;
   border-radius: 10px;
   text-align: center;
+  margin: 12px 0 24px 0;
 
   padding: 28px;
   width: 100%;
