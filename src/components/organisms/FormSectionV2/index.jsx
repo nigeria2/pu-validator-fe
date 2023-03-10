@@ -26,7 +26,7 @@ import nnpcImg from "../../../assets/svgs/nnpp.svg";
 import {
   markImageAsInvalidAsync,
   markImageAsUnclearAsync,
-  storeTranscribedDataAsync,
+  // storeTranscribedDataAsync,
 } from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
@@ -273,18 +273,19 @@ export const FormSectionV2 = ({ data }) => {
 
       if (session_id) transcriptionData.session_id = session_id;
 
-      const response = await dispatch(
-        storeTranscribedDataAsync(transcriptionData)
-      );
-      if (response.payload) {
-        if (!session_id)
-          localStorage.setItem("session_id", response.payload.session_id);
+      // const response = await dispatch(
+      //   storeTranscribedDataAsync(transcriptionData)
+      // );
+      // if (response.payload) {
+      //   if (!session_id)
+      //     localStorage.setItem("session_id", response.payload.session_id);
 
-        toast.success("Data submitted successfully");
-        reloadPage();
-      } else {
-        toast.error("An error occured!");
-      }
+      //   toast.success("Data submitted successfully");
+      //   reloadPage();
+      // } else {
+      //   toast.error("An error occured!");
+      // }
+      toast.error("we are yet to start v2 validation!");
     }
   };
 
