@@ -85,9 +85,7 @@ const addScoreKeyToPartyInfo = (parties) => {
 };
 
 export const FormSection = ({ data, refetch }) => {
-  const imageURLArray = data.image.url.split("/");
-  const puDelim = imageURLArray[7].split(".")[0];
-  // const puID = puDelim.split("-");
+  const puDelim = data.image.url.split("/")[7].split(".")[0].split("-");
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
   const [isNotStamped, setIsNotStamped] = useState(false);
   const [recaptchaDone, setRecaptchaDone] = useState(false);
@@ -248,9 +246,6 @@ export const FormSection = ({ data, refetch }) => {
             value={state}
             onChange={handleStateChange}
           />
-          <p style={{ fontWeight: 500, fontStyle: "italic" }}>
-            State detected : {imageURLArray[5]}
-          </p>
         </DroopdownWrapper>
         <DroopdownWrapper>
           <ComboBox
@@ -261,9 +256,6 @@ export const FormSection = ({ data, refetch }) => {
             value={lga}
             onChange={handleLGAChange}
           />
-          <p style={{ fontWeight: 500, fontStyle: "italic" }}>
-            LGA detected : {imageURLArray[6]}
-          </p>
         </DroopdownWrapper>
         <DroopdownWrapper>
           <ComboBox
@@ -275,7 +267,9 @@ export const FormSection = ({ data, refetch }) => {
             onChange={handlePollingUnitChange}
           />
           <p style={{ fontWeight: 500, fontStyle: "italic" }}>
-            Polling unit: {puDelim}
+            {/* puDelim */}
+            Detected: State ({puDelim[0]}) - LGA ({puDelim[1]}) - Polling unit:
+            ({puDelim[3]})
           </p>
         </DroopdownWrapper>
       </section>
