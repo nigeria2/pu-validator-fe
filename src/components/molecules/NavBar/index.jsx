@@ -75,11 +75,7 @@ export const NavBar = ({ justifyContent, stats }) => {
       ) : (
         initialData && (
           <ProgressBarContainer>
-            <ProgressBar
-              value={initialData.data?.statistics?.total_results}
-              total={initialData.data?.statistics?.total_images}
-              progressColor="#F58D53"
-            />
+            <ProgressBar value={0} total={50} progressColor="#F58D53" />
           </ProgressBarContainer>
         )
       )}

@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { Flex } from "../../atoms";
+import { Icons } from "../../atoms/Icons";
 
 export const Header = ({ stats }) => {
   return (
@@ -9,6 +11,18 @@ export const Header = ({ stats }) => {
 
         <p> ENTER THE NUMBERS YOU SEE IN THE IMAGE INTO THE TEXTBOXES</p>
       </StyledInstructionBox>
+      <Flex alignItems="center" margin="0 0 16px 0">
+        <Icons width="35" type="warning" fill="#ffc107" />{" "}
+        <p
+          style={{
+            paddingLeft: "10px",
+            color: "#ffc107",
+            fontWeight: "500",
+          }}
+        >
+          Only blurry images left. New images will be arriving on Sunday by 6pm{" "}
+        </p>
+      </Flex>
     </StyledHeaderWrapper>
   );
 };

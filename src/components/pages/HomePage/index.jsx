@@ -27,7 +27,7 @@ const LeftContent = styled(Flex)`
   align-items: center;
 
   @media only screen and (${screen.sm}) {
-    padding: 30px 0;
+    /* padding: 30px 0; */
     width: 100%;
   }
 `;
@@ -111,6 +111,7 @@ export const HomePage = () => {
               <ImageWrapper>
                 <ReactPanZoom image={initialData.data.image.url} />
               </ImageWrapper>
+
               // <div></div>
             )
           )}
