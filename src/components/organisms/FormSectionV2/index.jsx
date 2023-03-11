@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getLocalGovernmentsAsync } from "../../../store/features/localGovernment";
@@ -23,14 +23,15 @@ import adpImg from "../../../assets/svgs/adp.svg";
 import apgaImg from "../../../assets/svgs/apga.svg";
 import lpImg from "../../../assets/svgs/lp.svg";
 import nnpcImg from "../../../assets/svgs/nnpp.svg";
-import // markImageAsInvalidAsync,
-// markImageAsUnclearAsync,
-// storeTranscribedDataAsync,
-"../../../store/features/transcribe";
+import {
+  markImageAsInvalidV2Async,
+  markImageAsUnclearV2Async,
+  storeTranscribedDataV2Async,
+} from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
-import { sanitizeString } from "../../../utils/sanitizeString";
+// import { sanitizeString } from "../../../utils/sanitizeString";
 
 export const partiesInfo = [
   {
@@ -84,7 +85,7 @@ const addScoreKeyToPartyInfo = (parties) => {
 };
 
 export const FormSectionV2 = ({ data, refetch }) => {
-  const imageURLArray = data.image.url.split("/");
+  // const imageURLArray = data.image.url.split("/");
   // console.log("imageURLArray", imageURLArray);
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
   // const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
@@ -104,60 +105,10 @@ export const FormSectionV2 = ({ data, refetch }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    preSelectState(imageURLArray[5], data.states);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  async function preSelectState(key, states) {
-    const state = states.find((state) => {
-      return sanitizeString(state?.name) === sanitizeString(key);
-    });
-
-    if (state?.id && state?.name) {
-      setState({
-        id: state?.id,
-        label: `${state?.id} - ${state?.name}`,
-      });
-
-      const lgaData = await dispatch(getLocalGovernmentsAsync(state.id));
-      if (lgaData.payload) {
-        setLocalGovernments(lgaData.payload);
-        const LGAs = lgaData.payload.find((lga) => {
-          return sanitizeString(lga?.name) === sanitizeString(imageURLArray[6]);
-        });
-
-        if (LGAs?.id && LGAs?.name) {
-          setLGA({
-            id: LGAs.id,
-            label: `${LGAs.id} - ${LGAs.name}`,
-          });
-
-          const puData = await dispatch(pollingUnitsAsync(LGAs.id));
-          if (puData.payload) {
-            setPollingUnits(puData.payload);
-            const PUs = puData.payload.find((pollingUnit) => {
-              return (
-                sanitizeString(pollingUnit?.delimitation) ===
-                sanitizeString(imageURLArray[7].split(".")[0])
-              );
-            });
-
-            if (PUs?.id && PUs?.abbreviation && PUs?.name) {
-              setPollingUnit({
-                id: PUs.id,
-                label: `${PUs.abbreviation} - ${PUs.name}`,
-              });
-            }
-          }
-        }
-      }
-    }
-  }
-
-  // const refetchData = () => {
-  //   window.setTimeout(() => refetch(), 2000);
-  // };
+  const refetchData = () => {
+    // window.setTimeout(() => refetch(), 2000);
+    window.setTimeout(() => window.location.reload(), 2000);
+  };
 
   function handleRecaptcha(value) {
     if (value) {
@@ -197,24 +148,24 @@ export const FormSectionV2 = ({ data, refetch }) => {
   };
 
   const markImageAsUnclear = async () => {
-    // const response = await dispatch(markImageAsUnclearAsync(data.image.id));
-    // if (response.payload) {
-    //   toast.success("Fetching new image...");
-    //   refetchData();
-    // } else {
-    //   toast.error("Failed to mark image as unclear");
-    // }
+    const response = await dispatch(markImageAsUnclearV2Async(data.image.id));
+    if (response.payload) {
+      toast.success("Fetching new image...");
+      refetchData();
+    } else {
+      toast.error("Failed to mark image as unclear");
+    }
     toast.error("You cannot perform this action yet");
   };
 
   const markImageAsInvalid = async () => {
-    // const response = await dispatch(markImageAsInvalidAsync(data.image.id));
-    // if (response.payload) {
-    //   toast.success("Fetching new image...");
-    //   refetchData();
-    // } else {
-    //   toast.error("Failed to flag image as invalid");
-    // }
+    const response = await dispatch(markImageAsInvalidV2Async(data.image.id));
+    if (response.payload) {
+      toast.success("Fetching new image...");
+      refetchData();
+    } else {
+      toast.error("Failed to flag image as invalid");
+    }
     toast.error("You cannot perform this action yet");
   };
 
@@ -274,18 +225,18 @@ export const FormSectionV2 = ({ data, refetch }) => {
 
       if (session_id) transcriptionData.session_id = session_id;
 
-      // const response = await dispatch(
-      //   storeTranscribedDataAsync(transcriptionData)
-      // );
-      // if (response.payload) {
-      //   if (!session_id)
-      //     localStorage.setItem("session_id", response.payload.session_id);
+      const response = await dispatch(
+        storeTranscribedDataV2Async(transcriptionData)
+      );
+      if (response.payload) {
+        if (!session_id)
+          localStorage.setItem("session_id", response.payload.session_id);
 
-      //   toast.success("Data submitted successfully");
-      //   reloadPage();
-      // } else {
-      //   toast.error("An error occured!");
-      // }
+        toast.success("Data submitted successfully");
+        refetchData();
+      } else {
+        toast.error("An error occured!");
+      }
       toast.error("we are yet to start v2 validation!");
     }
   };

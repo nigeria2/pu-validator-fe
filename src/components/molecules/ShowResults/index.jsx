@@ -1,19 +1,19 @@
 import React from "react";
 import { Flex } from "../../atoms";
 import { SilentLink } from "../../atoms/SilentLink";
-import styled from "styled-components";
-import { screen } from "../../theme/utils";
-import { Loader } from "../../atoms/Loader";
-import { formatNumber } from "../../../utils/formatNumber";
+// import styled from "styled-components";
+// import { screen } from "../../theme/utils";
+// import { Loader } from "../../atoms/Loader";
+// import { formatNumber } from "../../../utils/formatNumber";
 
-const SummaryText = styled.p`
-  @media only screen and (${screen.sm}) {
-    width: 70%;
-    text-align: center;
-  }
-`;
+// const SummaryText = styled.p`
+//   @media only screen and (${screen.sm}) {
+//     width: 70%;
+//     text-align: center;
+//   }
+// `;
 export const ShowResults = ({ stats }) => {
-  const totalResults = stats?.data?.data?.statistics?.total_results;
+  // const totalResults = stats?.data?.data?.statistics?.total_results;
   return (
     <Flex direction="column" justifyContent="center" alignItems="center">
       <SilentLink to={`/results`}>
@@ -23,7 +23,7 @@ export const ShowResults = ({ stats }) => {
         {/* &#10132; */}
       </SilentLink>
 
-      {stats.isLoading ? (
+      {/* {stats.isLoading ? (
         <Loader type="circle" />
       ) : stats.isError ? (
         <p>Error</p>
@@ -37,7 +37,7 @@ export const ShowResults = ({ stats }) => {
             images not transcribed yet
           </SummaryText>
         )
-      )}
+      )} */}
     </Flex>
   );
 };

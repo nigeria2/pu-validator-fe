@@ -15,12 +15,12 @@ globalAxios.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 419) {
-      toast.success("😎 Session expired!!!", {
+      toast.error("😎 Session expired!!!", {
         toastId: error.response.status,
       });
     }
     if (error.response.status === 404) {
-      toast.success("😎 You are trying to access a resource we don't have!", {
+      toast.error("😎 You are trying to access a resource we don't have!", {
         toastId: error.response.status,
       });
     }
