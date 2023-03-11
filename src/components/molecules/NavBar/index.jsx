@@ -25,20 +25,16 @@ const ProgressBarContainer = styled.div`
 `;
 
 export const fetchInitialData = async () => {
-  const response = await apiService("/api/v1/transcribe", "GET");
-  if (response.data.session_id) {
-    localStorage.setItem("session_id", response.data.session_id);
-    // console.log("response data", response.data);
-  }
+  const response = await apiService("/api/v2/statistics", "GET");
   return response.data;
 };
 
-export const NavBar = ({ justifyContent, stats }) => {
+export const NavBar = ({ justifyContent }) => {
   const {
     data: initialData,
     isLoading,
     isError,
-  } = useQuery(["transcribe2"], fetchInitialData, {
+  } = useQuery(["statsV2"], fetchInitialData, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
@@ -54,8 +50,8 @@ export const NavBar = ({ justifyContent, stats }) => {
         initialData && (
           <ProgressBarContainer>
             <ProgressBar
-              value={initialData.data?.statistics?.total_results}
-              total={initialData.data?.statistics?.total_images}
+              value={initialData.data?.v1?.total_results}
+              total={initialData.data?.v2?.total_images}
             />
           </ProgressBarContainer>
         )
