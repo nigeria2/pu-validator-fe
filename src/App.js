@@ -11,7 +11,8 @@ import { TranscriptionV2Page } from "./components/pages/TranscriptionV2Page";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+
+    element: <TranscriptionV2Page />,
   },
   {
     path: "/login",
@@ -23,10 +24,10 @@ const router = createBrowserRouter([
     // element: <StatisticsPage />,
   },
   {
-    path: "/transcribev2",
+    path: "/v1-landing",
     element: (
       <ProtectedRoute>
-        <TranscriptionV2Page />
+        <HomePage />
       </ProtectedRoute>
     ),
   },
