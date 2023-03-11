@@ -50,8 +50,8 @@ export const NavBar = ({ justifyContent }) => {
         initialData && (
           <ProgressBarContainer>
             <ProgressBar
-              value={initialData.data?.v1?.total_results}
-              total={initialData.data?.v2?.total_images}
+              value={initialData.data?.statistics?.v1?.total_results}
+              total={initialData.data?.statistics?.v1?.total_images}
             />
           </ProgressBarContainer>
         )
@@ -72,8 +72,8 @@ export const NavBar = ({ justifyContent }) => {
         initialData && (
           <ProgressBarContainer>
             <ProgressBar
-              value={initialData.data?.statistics?.total_results}
-              total={initialData.data?.statistics?.total_images}
+              value={initialData.data?.statistics?.v2?.total_results}
+              total={initialData.data?.statistics?.v2?.total_images}
               progressColor="#F58D53"
             />
           </ProgressBarContainer>
