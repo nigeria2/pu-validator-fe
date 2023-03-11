@@ -104,7 +104,7 @@ export const FormSection = ({ data, refetch }) => {
   const dispatch = useDispatch();
 
   const refetchData = () => {
-    window.setTimeout(() => refetch(), 2000);
+    window.setTimeout(() => window.location.reload(), 2000);
   };
 
   function handleRecaptcha(value) {
