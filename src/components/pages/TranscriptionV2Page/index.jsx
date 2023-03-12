@@ -2,7 +2,7 @@ import React from "react";
 import { HomeTemplate } from "../../templates/HomeTemplate";
 import { Footer } from "../../molecules/Footer";
 import { ShowResults } from "../../molecules/ShowResults";
-import { FormSection, Header } from "../../organisms";
+import { Header } from "../../organisms";
 import styled from "styled-components";
 import { Flex } from "../../atoms";
 import { screen } from "../../theme/utils";
@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader } from "../../atoms/Loader";
 import ReactPanZoom from "react-image-pan-zoom-rotate";
 import { NavBar } from "../../molecules";
+import { FormSectionV2 } from "../../organisms/FormSectionV2";
 
 const ContentWrapper = styled(Flex)`
   gap: 1em;
@@ -21,13 +22,12 @@ const ContentWrapper = styled(Flex)`
 `;
 const LeftContent = styled(Flex)`
   width: 70%;
-  /* padding: 0 1.5em 0 0; */
-  border-right: 1px solid #e5e2ed;
+  /* border-right: 1px solid #e5e2ed; */
   justify-content: center;
   align-items: center;
 
   @media only screen and (${screen.sm}) {
-    /* padding: 30px 0; */
+    padding: 30px 0;
     width: 100%;
   }
 `;
@@ -48,9 +48,10 @@ const RightContent = styled(Flex)`
 const ImageWrapper = styled.div`
   width: 100%;
   height: 100%;
-  border-radius: 20px;
   position: relative;
   overflow: hidden;
+  border: 10px solid #f58d53;
+  border-radius: 20px;
 `;
 const ErrorAndLoaderWrapper = styled(Flex)`
   justify-content: center;
@@ -66,7 +67,7 @@ const ErrrorText = styled.p`
   }
 `;
 export const fetchInitialData = async () => {
-  const response = await apiService("/api/v1/transcribe", "GET");
+  const response = await apiService("/api/v2/transcribe", "GET");
   if (response.data.session_id) {
     localStorage.setItem("session_id", response.data.session_id);
     // console.log("response data", response.data);
@@ -74,13 +75,13 @@ export const fetchInitialData = async () => {
   return response.data;
 };
 
-export const HomePage = () => {
+export const TranscriptionV2Page = () => {
   const {
     data: initialData,
     isLoading,
     isError,
     refetch,
-  } = useQuery(["transcribe"], fetchInitialData, {
+  } = useQuery(["transcribev2"], fetchInitialData, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
@@ -111,7 +112,6 @@ export const HomePage = () => {
               <ImageWrapper>
                 <ReactPanZoom image={initialData.data.image.url} />
               </ImageWrapper>
-
               // <div></div>
             )
           )}
@@ -129,7 +129,7 @@ export const HomePage = () => {
             </ErrorAndLoaderWrapper>
           ) : (
             initialData && (
-              <FormSection data={initialData.data} refetch={refetch} />
+              <FormSectionV2 data={initialData.data} refetch={refetch} />
             )
           )}
         </RightContent>

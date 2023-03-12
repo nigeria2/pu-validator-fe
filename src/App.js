@@ -6,11 +6,13 @@ import { LoginPage } from "./components/pages/LoginPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { FormValidationPage } from "./components/pages/FormValidationPage";
 import { ResultUnavailablePage } from "./components/pages/ResultUnavailablePage";
+import { TranscriptionV2Page } from "./components/pages/TranscriptionV2Page";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+
+    element: <TranscriptionV2Page />,
   },
   {
     path: "/login",
@@ -20,6 +22,14 @@ const router = createBrowserRouter([
     path: "/results",
     element: <ResultUnavailablePage />,
     // element: <StatisticsPage />,
+  },
+  {
+    path: "/v1-landing",
+    element: (
+      <ProtectedRoute>
+        <HomePage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/validators",
