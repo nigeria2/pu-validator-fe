@@ -155,7 +155,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
     } else {
       toast.error("Failed to mark image as unclear");
     }
-    toast.error("You cannot perform this action yet");
+//     toast.error("You cannot perform this action yet");
   };
 
   const markImageAsInvalid = async () => {
@@ -166,7 +166,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
     } else {
       toast.error("Failed to flag image as invalid");
     }
-    toast.error("You cannot perform this action yet");
+//     toast.error("You cannot perform this action yet");
   };
 
   const handleLGAChange = async (e, newValue) => {
