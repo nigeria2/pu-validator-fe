@@ -42,7 +42,7 @@ const StatusValueText = styled.p`
   }
 `;
 
-export const ProgressBar = ({ value, total, width, progressColor }) => {
+export const ProgressBar = ({ value, total, width, progressColor, progressStatusTxt }) => {
   const percentageOfCompletion = (value / total) * 100;
   const displayFigure =
     percentageOfCompletion % 2 === 0
@@ -68,7 +68,7 @@ export const ProgressBar = ({ value, total, width, progressColor }) => {
       >
         <StatusValueText {...innerTextProps}>{displayFigure}%</StatusValueText>
         <StatusValueText {...leftStatusTextProps} color="black">
-          {formatNumber(value)} transcribed
+          {formatNumber(value)}{" "}{progressStatusTxt ? progressStatusTxt : "transcribed"}
         </StatusValueText>
       </ProgressElement>
     </ProgressWrapper>
