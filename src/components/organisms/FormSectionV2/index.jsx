@@ -24,9 +24,9 @@ import apgaImg from "../../../assets/svgs/apga.svg";
 import lpImg from "../../../assets/svgs/lp.svg";
 import nnpcImg from "../../../assets/svgs/nnpp.svg";
 import {
-  markImageAsInvalidV2Async,
-  markImageAsUnclearV2Async,
   storeTranscribedDataV2Async,
+  markImageAsInvalidAsync,
+  markImageAsUnclearAsync
 } from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
@@ -148,7 +148,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
   };
 
   const markImageAsUnclear = async () => {
-    const response = await dispatch(markImageAsUnclearV2Async(data.image.id));
+    const response = await dispatch(markImageAsUnclearAsync(data.image.id));
     if (response.payload) {
       toast.success("Fetching new image...");
       refetchData();
@@ -159,7 +159,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
   };
 
   const markImageAsInvalid = async () => {
-    const response = await dispatch(markImageAsInvalidV2Async(data.image.id));
+    const response = await dispatch(markImageAsInvalidAsync(data.image.id));
     if (response.payload) {
       toast.success("Fetching new image...");
       refetchData();
