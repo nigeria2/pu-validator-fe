@@ -237,7 +237,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
       } else {
         toast.error("An error occured!");
       }
-      toast.error("we are yet to start v2 validation!");
+//       toast.error("we are yet to start v2 validation!");
     }
   };
 
