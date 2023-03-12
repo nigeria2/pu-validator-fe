@@ -3,7 +3,7 @@ export function sanitizeString(string) {
   return sanitizedString?.toLowerCase();
 }
 
-function sanitizeInputString(string) {
+export function sanitizeInputString(string) {
   if (typeof string !== 'string') return ""
   const sanitizedString = string.replace(/[^\d]|_| /gi, "");
   if (typeof sanitizedString !== 'string') return ""
