@@ -31,7 +31,7 @@ import {
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
-// import { sanitizeString } from "../../../utils/sanitizeString";
+import { sanitizeInputString } from "../../../utils/sanitizeString";
 
 export const partiesInfo = [
   {
@@ -125,7 +125,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
         return party.id + "" === e.target.name;
       });
       const newArray = [...prev];
-      newArray[partyIndex].score = e.target.value ? +e.target.value : "";
+      newArray[partyIndex].score = +sanitizeInputString(e.target.value);
       return newArray;
     });
   };
@@ -155,7 +155,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
     } else {
       toast.error("Failed to mark image as unclear");
     }
-    toast.error("You cannot perform this action yet");
+//     toast.error("You cannot perform this action yet");
   };
 
   const markImageAsInvalid = async () => {
@@ -166,7 +166,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
     } else {
       toast.error("Failed to flag image as invalid");
     }
-    toast.error("You cannot perform this action yet");
+//     toast.error("You cannot perform this action yet");
   };
 
   const handleLGAChange = async (e, newValue) => {
@@ -279,7 +279,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
         {pollValues.map((data, idx) => (
           <div key={idx}>
             <VoteInput
-              type="number"
+              type="text"
               keyValue={`${idx}-input`}
               name={data.id}
               partyName={data.name}
