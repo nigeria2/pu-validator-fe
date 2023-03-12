@@ -1,47 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { NavBar } from "../../molecules";
-import { ProgressBar } from "../../atoms/ProgressBar";
-import { Loader } from "../../atoms/Loader";
-import { screen } from "../../theme/utils";
-import { Flex } from "../../atoms";
-import { Icons } from "../../atoms/Icons";
+// import { Flex } from "../../atoms";
+// import { Icons } from "../../atoms/Icons";
 
-const ProgressBarContainer = styled.div`
-  width: 25%;
-  position: absolute;
-  right: 10px;
-  top: 11px;
-
-  @media only screen and (${screen.sm}) {
-    width: 40%;
-  }
-`;
 export const Header = ({ stats }) => {
   return (
     <StyledHeaderWrapper className="container">
-      <NavBar />
-      {stats.isLoading ? (
-        <Loader type="circle" />
-      ) : stats.isError ? (
-        <p>Error</p>
-      ) : (
-        stats.data && (
-          <ProgressBarContainer>
-            <ProgressBar
-              value={stats?.data?.data?.statistics?.total_results}
-              total={stats?.data?.data?.statistics?.total_images}
-            />
-          </ProgressBarContainer>
-        )
-      )}
-
       <StyledInstructionBox>
         <h2>INSTRUCTIONS</h2>
 
         <p> ENTER THE NUMBERS YOU SEE IN THE IMAGE INTO THE TEXTBOXES</p>
       </StyledInstructionBox>
-      <Flex alignItems="center" margin="0 0 16px 0">
+      {/* <Flex alignItems="center" margin="0 0 16px 0">
         <Icons width="35" type="warning" fill="#ffc107" />{" "}
         <p
           style={{
@@ -52,7 +22,7 @@ export const Header = ({ stats }) => {
         >
           Only blurry images left. New images will be arriving on Sunday by 6pm{" "}
         </p>
-      </Flex>
+      </Flex> */}
     </StyledHeaderWrapper>
   );
 };
@@ -68,6 +38,7 @@ export const StyledInstructionBox = styled.div`
   background: #fafaf5;
   border-radius: 10px;
   text-align: center;
+  margin: 12px 0 24px 0;
 
   padding: 28px;
   width: 100%;

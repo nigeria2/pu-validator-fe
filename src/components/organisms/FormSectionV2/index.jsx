@@ -24,9 +24,9 @@ import apgaImg from "../../../assets/svgs/apga.svg";
 import lpImg from "../../../assets/svgs/lp.svg";
 import nnpcImg from "../../../assets/svgs/nnpp.svg";
 import {
-  markImageAsInvalidAsync,
-  markImageAsUnclearAsync,
-  storeTranscribedDataAsync,
+  markImageAsInvalidV2Async,
+  markImageAsUnclearV2Async,
+  storeTranscribedDataV2Async,
 } from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
@@ -84,9 +84,11 @@ const addScoreKeyToPartyInfo = (parties) => {
   });
 };
 
-export const FormSection = ({ data, refetch }) => {
-  const puDelim = data.image.url.split("/")[7].split(".")[0].split("-");
+export const FormSectionV2 = ({ data, refetch }) => {
+  // const imageURLArray = data.image.url.split("/");
+  // console.log("imageURLArray", imageURLArray);
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
+  // const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
   const [isNotStamped, setIsNotStamped] = useState(false);
   const [recaptchaDone, setRecaptchaDone] = useState(false);
   const [recaptchaValue, setRecaptchaValue] = useState(null);
@@ -104,6 +106,7 @@ export const FormSection = ({ data, refetch }) => {
   const dispatch = useDispatch();
 
   const refetchData = () => {
+    // window.setTimeout(() => refetch(), 2000);
     window.setTimeout(() => window.location.reload(), 2000);
   };
 
@@ -145,23 +148,25 @@ export const FormSection = ({ data, refetch }) => {
   };
 
   const markImageAsUnclear = async () => {
-    const response = await dispatch(markImageAsUnclearAsync(data.image.id));
+    const response = await dispatch(markImageAsUnclearV2Async(data.image.id));
     if (response.payload) {
       toast.success("Fetching new image...");
       refetchData();
     } else {
       toast.error("Failed to mark image as unclear");
     }
+    toast.error("You cannot perform this action yet");
   };
 
   const markImageAsInvalid = async () => {
-    const response = await dispatch(markImageAsInvalidAsync(data.image.id));
+    const response = await dispatch(markImageAsInvalidV2Async(data.image.id));
     if (response.payload) {
       toast.success("Fetching new image...");
       refetchData();
     } else {
       toast.error("Failed to flag image as invalid");
     }
+    toast.error("You cannot perform this action yet");
   };
 
   const handleLGAChange = async (e, newValue) => {
@@ -221,7 +226,7 @@ export const FormSection = ({ data, refetch }) => {
       if (session_id) transcriptionData.session_id = session_id;
 
       const response = await dispatch(
-        storeTranscribedDataAsync(transcriptionData)
+        storeTranscribedDataV2Async(transcriptionData)
       );
       if (response.payload) {
         if (!session_id)
@@ -232,6 +237,7 @@ export const FormSection = ({ data, refetch }) => {
       } else {
         toast.error("An error occured!");
       }
+//       toast.error("we are yet to start v2 validation!");
     }
   };
 
@@ -266,11 +272,6 @@ export const FormSection = ({ data, refetch }) => {
             value={pollingUnit}
             onChange={handlePollingUnitChange}
           />
-          <p style={{ fontWeight: 500, fontStyle: "italic" }}>
-            {/* puDelim */}
-            Detected: State ({puDelim[0]}) - LGA ({puDelim[1]}) - Polling unit:
-            ({puDelim[3]})
-          </p>
         </DroopdownWrapper>
       </section>
 
