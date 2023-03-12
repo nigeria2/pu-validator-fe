@@ -68,7 +68,7 @@ export const ProgressBar = ({ value, total, width, progressColor, progressStatus
       >
         <StatusValueText {...innerTextProps}>{displayFigure}%</StatusValueText>
         <StatusValueText {...leftStatusTextProps} color="black">
-          {formatNumber(value)} {progressStatusTxt ? progressStatusTxt : "transcribed"}
+          {formatNumber(value)}{" "}{progressStatusTxt ? progressStatusTxt : "transcribed"}
         </StatusValueText>
       </ProgressElement>
     </ProgressWrapper>
