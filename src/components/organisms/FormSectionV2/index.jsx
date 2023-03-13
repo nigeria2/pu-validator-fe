@@ -26,12 +26,13 @@ import nnpcImg from "../../../assets/svgs/nnpp.svg";
 import {
   storeTranscribedDataV2Async,
   markImageAsInvalidAsync,
-  markImageAsUnclearAsync
+  markImageAsUnclearAsync,
 } from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
 import { sanitizeInputString } from "../../../utils/sanitizeString";
+import Modal from "../Modal";
 
 export const partiesInfo = [
   {
@@ -102,6 +103,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
   const session_id = localStorage.getItem("session_id");
   const [localGovernments, setLocalGovernments] = useState([]);
   const [pollingUnits, setPollingUnits] = useState([]);
+  const [showModal, setShowModal] = useState("closed");
 
   const dispatch = useDispatch();
 
@@ -155,7 +157,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
     } else {
       toast.error("Failed to mark image as unclear");
     }
-//     toast.error("You cannot perform this action yet");
+    //     toast.error("You cannot perform this action yet");
   };
 
   const markImageAsInvalid = async () => {
@@ -166,7 +168,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
     } else {
       toast.error("Failed to flag image as invalid");
     }
-//     toast.error("You cannot perform this action yet");
+    //     toast.error("You cannot perform this action yet");
   };
 
   const handleLGAChange = async (e, newValue) => {
@@ -232,17 +234,20 @@ export const FormSectionV2 = ({ data, refetch }) => {
         if (!session_id)
           localStorage.setItem("session_id", response.payload.session_id);
 
-        toast.success("Data submitted successfully");
+        setShowModal("open");
+
+        // toast.success("Data submitted successfully");
         refetchData();
       } else {
         toast.error("An error occured!");
       }
-//       toast.error("we are yet to start v2 validation!");
+      //       toast.error("we are yet to start v2 validation!");
     }
   };
 
   return (
     <>
+      <Modal modalState={showModal} />
       <section style={{ margin: "0 0 32px 0" }}>
         <h3 style={{ margin: "0 0 10px 0" }}>Registration Area</h3>
         <DroopdownWrapper>
