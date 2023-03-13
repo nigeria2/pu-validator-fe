@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import styled, { keyframes } from "styled-components";
 import { screen } from "../../theme/utils";
@@ -75,31 +75,31 @@ const SubTitle = styled.p`
   }
 `;
 
+const subtitleText = [
+  "Yay, you matched the numbers! This vote is now validated",
+  "Let's make this happen! You validated well.",
+  "You did a good job, well done!",
+  "I like the numbers you entered.",
+  "You're working hard to make the country a better place.",
+  "Your passion is the engine that will help us build a better Nigeria",
+];
+
+const randomIndex = Math.floor(Math.random() * subtitleText.length);
+
+const randomItem = subtitleText[randomIndex];
+
 const Modal = ({ modalState }) => {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (modalState === "open") {
       setOpenModal(true);
-      setTimeout(() => {
+      const timerId = setTimeout(() => {
         setOpenModal(false);
       }, 2000);
+      return () => clearTimeout(timerId);
     } else setOpenModal(false);
   }, [modalState]);
-
-  const [subtitleText] = useState([
-    "Yay, you matched the numbers! This vote is now validated",
-    "Let's make this happen! You validated well.",
-    "You did a good job, well done!",
-    "I like the numbers you entered.",
-    "You're working hard to make the country a better place.",
-    "Your passion is the engine that will help us build a better Nigeria",
-  ]);
-
-  const randomItem = useMemo(() => {
-    const randomIndex = Math.floor(Math.random() * subtitleText.length);
-    return subtitleText[randomIndex];
-  }, [subtitleText]);
 
   return ReactDOM.createPortal(
     openModal && (
