@@ -84,9 +84,9 @@ const subtitleText = [
   "Your passion is the engine that will help us build a better Nigeria",
 ];
 
-const randomIndex = Math.floor(Math.random() * subtitleText.length);
-
-const randomItem = subtitleText[randomIndex];
+function generateRandomIndex(max) {
+  return Math.floor(Math.random() * max);
+}
 
 const Modal = ({ modalState }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -107,7 +107,9 @@ const Modal = ({ modalState }) => {
         <ModalContent>
           <Icon src={Congrats} />
           <Title>Submission Successful!</Title>
-          <SubTitle>"{randomItem}"</SubTitle>
+          <SubTitle>
+            {subtitleText[generateRandomIndex(subtitleText.length)]}
+          </SubTitle>
         </ModalContent>
       </ModalWrapper>
     ),
