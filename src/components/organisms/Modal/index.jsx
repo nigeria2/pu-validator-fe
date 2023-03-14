@@ -76,7 +76,7 @@ const SubTitle = styled.p`
 `;
 
 const subtitleText = [
-  "Yay, you matched the numbers! This vote is now validated",
+  "You validated this sheet. Your work is making Nigeria a better place",
   "Let's make this happen! You validated well.",
   "You did a good job, well done!",
   "I like the numbers you entered.",
@@ -94,15 +94,11 @@ const Modal = ({ modalState }) => {
   useEffect(() => {
     if (modalState === "open") {
       setOpenModal(true);
-      const timerId = setTimeout(() => {
-        setOpenModal(false);
-      }, 2000);
-      return () => clearTimeout(timerId);
     } else setOpenModal(false);
   }, [modalState]);
 
   return ReactDOM.createPortal(
-    openModal && (
+    openModal ? (
       <ModalWrapper>
         <ModalContent>
           <Icon src={Congrats} />
@@ -112,6 +108,8 @@ const Modal = ({ modalState }) => {
           </SubTitle>
         </ModalContent>
       </ModalWrapper>
+    ) : (
+      ""
     ),
     document.getElementById("portal")
   );
