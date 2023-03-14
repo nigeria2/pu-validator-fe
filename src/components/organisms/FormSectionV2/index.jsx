@@ -103,7 +103,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
   const session_id = localStorage.getItem("session_id");
   const [localGovernments, setLocalGovernments] = useState([]);
   const [pollingUnits, setPollingUnits] = useState([]);
-  const [showModal, setShowModal] = useState("closed");
+  const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -234,7 +234,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
         if (!session_id)
           localStorage.setItem("session_id", response.payload.session_id);
 
-        setShowModal("open");
+        setShowModal(true);
 
         // toast.success("Data submitted successfully");
         refetchData();
@@ -247,7 +247,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
 
   return (
     <>
-      <Modal modalState={showModal} />
+      <Modal isActive={showModal} />
       <section style={{ margin: "0 0 32px 0" }}>
         <h3 style={{ margin: "0 0 10px 0" }}>Registration Area</h3>
         <DroopdownWrapper>

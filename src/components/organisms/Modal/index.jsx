@@ -88,14 +88,14 @@ function generateRandomIndex(max) {
   return Math.floor(Math.random() * max);
 }
 
-const Modal = ({ modalState }) => {
+const Modal = ({ isActive }) => {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    if (modalState === "open") {
+    if (isActive === true) {
       setOpenModal(true);
     } else setOpenModal(false);
-  }, [modalState]);
+  }, [isActive]);
 
   return ReactDOM.createPortal(
     openModal ? (
@@ -108,9 +108,7 @@ const Modal = ({ modalState }) => {
           </SubTitle>
         </ModalContent>
       </ModalWrapper>
-    ) : (
-      ""
-    ),
+    ) : null,
     document.getElementById("portal")
   );
 };
