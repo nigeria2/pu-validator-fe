@@ -14,7 +14,13 @@ export const RadioInput = ({ name, label, value, onChange }) => {
   return (
     <Flex margin="0 0 10px 0">
       <Label>
-        <Input type="radio" value={value} name={name} onChange={onChange} />
+        <Input
+          disabled
+          type="radio"
+          value={value}
+          name={name}
+          onChange={onChange}
+        />
         {label}
       </Label>
     </Flex>

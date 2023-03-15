@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import styled, { keyframes } from "styled-components";
 import { screen } from "../../theme/utils";
@@ -76,7 +76,7 @@ const SubTitle = styled.p`
 `;
 
 const subtitleText = [
-  "Yay, you matched the numbers! This vote is now validated",
+  "You validated this sheet. Your work is making Nigeria a better place",
   "Let's make this happen! You validated well.",
   "You did a good job, well done!",
   "I like the numbers you entered.",
@@ -88,21 +88,9 @@ function generateRandomIndex(max) {
   return Math.floor(Math.random() * max);
 }
 
-const Modal = ({ modalState }) => {
-  const [openModal, setOpenModal] = useState(false);
-
-  useEffect(() => {
-    if (modalState === "open") {
-      setOpenModal(true);
-      const timerId = setTimeout(() => {
-        setOpenModal(false);
-      }, 2000);
-      return () => clearTimeout(timerId);
-    } else setOpenModal(false);
-  }, [modalState]);
-
+const Modal = ({ isActive }) => {
   return ReactDOM.createPortal(
-    openModal && (
+    isActive === true ? (
       <ModalWrapper>
         <ModalContent>
           <Icon src={Congrats} />
@@ -112,7 +100,7 @@ const Modal = ({ modalState }) => {
           </SubTitle>
         </ModalContent>
       </ModalWrapper>
-    ),
+    ) : null,
     document.getElementById("portal")
   );
 };
