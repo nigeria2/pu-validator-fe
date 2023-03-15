@@ -42,6 +42,7 @@ export const VoteInput = ({
         <Logo src={icon} alt={`${partyName}-logo`} /> {partyName}
       </Label>
       <Input
+        disabled
         type={type}
         name={name}
         id={name}

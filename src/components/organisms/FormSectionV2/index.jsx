@@ -11,7 +11,7 @@ import { RadioInput } from "../../atoms/RadioInput";
 // import { DropDownInput } from "../../molecules/DropdownInput";
 import {
   serializeLGAData,
-  serializePartiesDataForSubmission,
+  // serializePartiesDataForSubmission,
   serializePollingUnitData,
   serializeStatesData,
 } from "../../../utils/serializeData";
@@ -23,16 +23,16 @@ import adpImg from "../../../assets/svgs/adp.svg";
 import apgaImg from "../../../assets/svgs/apga.svg";
 import lpImg from "../../../assets/svgs/lp.svg";
 import nnpcImg from "../../../assets/svgs/nnpp.svg";
-import {
-  storeTranscribedDataV2Async,
-  markImageAsInvalidAsync,
-  markImageAsUnclearAsync,
-} from "../../../store/features/transcribe";
+// import {
+//   storeTranscribedDataV2Async,
+//   markImageAsInvalidAsync,
+//   markImageAsUnclearAsync,
+// } from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
 import { sanitizeInputString } from "../../../utils/sanitizeString";
-import Modal from "../Modal";
+// import Modal from "../Modal";
 
 export const partiesInfo = [
   {
@@ -91,33 +91,33 @@ export const FormSectionV2 = ({ data, refetch }) => {
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
   // const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
   const [isNotStamped, setIsNotStamped] = useState(false);
-  const [recaptchaDone, setRecaptchaDone] = useState(false);
-  const [recaptchaValue, setRecaptchaValue] = useState(null);
+  // const [recaptchaDone, setRecaptchaDone] = useState(false);
+  // const [recaptchaValue, setRecaptchaValue] = useState(null);
   const [state, setState] = useState(null);
   const [lga, setLGA] = useState(null);
   const [pollingUnit, setPollingUnit] = useState(null);
-  const [isFormCorrect, setIsFormCorrect] = useState(null);
+  // const [isFormCorrect, setIsFormCorrect] = useState(null);
   const [pollValues, setPollValues] = useState(
     addScoreKeyToPartyInfo(ALLOWED_PARTIES)
   );
-  const session_id = localStorage.getItem("session_id");
+  // const session_id = localStorage.getItem("session_id");
   const [localGovernments, setLocalGovernments] = useState([]);
   const [pollingUnits, setPollingUnits] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
 
-  const refetchData = () => {
-    // window.setTimeout(() => refetch(), 2000);
-    window.setTimeout(() => window.location.reload(), 2000);
-  };
+  // const refetchData = () => {
+  //   // window.setTimeout(() => refetch(), 2000);
+  //   window.setTimeout(() => window.location.reload(), 2000);
+  // };
 
   function handleRecaptcha(value) {
     if (value) {
-      setRecaptchaValue(value);
-      setRecaptchaDone(true);
+      // setRecaptchaValue(value);
+      // setRecaptchaDone(true);
     } else {
-      setRecaptchaDone(false);
+      // setRecaptchaDone(false);
     }
   }
 
@@ -150,24 +150,26 @@ export const FormSectionV2 = ({ data, refetch }) => {
   };
 
   const markImageAsUnclear = async () => {
-    const response = await dispatch(markImageAsUnclearAsync(data.image.id));
-    if (response.payload) {
-      toast.success("Fetching new image...");
-      refetchData();
-    } else {
-      toast.error("Failed to mark image as unclear");
-    }
+    toast.info("We are no longer accepting submissions");
+    // const response = await dispatch(markImageAsUnclearAsync(data.image.id));
+    // if (response.payload) {
+    //   toast.success("Fetching new image...");
+    //   refetchData();
+    // } else {
+    //   toast.error("Failed to mark image as unclear");
+    // }
     //     toast.error("You cannot perform this action yet");
   };
 
   const markImageAsInvalid = async () => {
-    const response = await dispatch(markImageAsInvalidAsync(data.image.id));
-    if (response.payload) {
-      toast.success("Fetching new image...");
-      refetchData();
-    } else {
-      toast.error("Failed to flag image as invalid");
-    }
+    toast.info("We are no longer accepting submissions");
+    // const response = await dispatch(markImageAsInvalidAsync(data.image.id));
+    // if (response.payload) {
+    //   toast.success("Fetching new image...");
+    //   refetchData();
+    // } else {
+    //   toast.error("Failed to flag image as invalid");
+    // }
     //     toast.error("You cannot perform this action yet");
   };
 
@@ -186,7 +188,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
   };
 
   const handleIsFormCorrect = (e) => {
-    setIsFormCorrect(e.target.value);
+    // setIsFormCorrect(e.target.value);
   };
 
   // const handleisNotPresidentialForm = () => {
@@ -202,52 +204,49 @@ export const FormSectionV2 = ({ data, refetch }) => {
   };
 
   const prepareSubmissionData = async () => {
-    if (!state) {
-      toast.error("Please select state");
-    } else if (!lga) {
-      toast.error("Please select LGA");
-    } else if (!pollingUnit) {
-      toast.error("Please select polling unit");
-    } else if (isFormCorrect === null) {
-      toast.error("Please let us know if the form is intact or not");
-    } else if (recaptchaValue === null) {
-      toast.error("You must verify your identity to continue");
-    } else {
-      const transcriptionData = {
-        polling_unit_id: pollingUnit.id,
-        image_id: data.image.id,
-        has_corrections:
-          isFormCorrect === "true" || isFormCorrect === true ? true : false,
-        // g_recaptcha_response: recaptchaValue,
-        state_id: state.id,
-        lga_id: lga.id,
-        is_not_stamped: isNotStamped,
-        parties: serializePartiesDataForSubmission(pollValues),
-      };
-
-      if (session_id) transcriptionData.session_id = session_id;
-
-      const response = await dispatch(
-        storeTranscribedDataV2Async(transcriptionData)
-      );
-      if (response.payload) {
-        if (!session_id)
-          localStorage.setItem("session_id", response.payload.session_id);
-
-        setShowModal(true);
-
-        // toast.success("Data submitted successfully");
-        refetchData();
-      } else {
-        toast.error("An error occured!");
-      }
-      //       toast.error("we are yet to start v2 validation!");
-    }
+    toast.info("We are no longer accepting submissions");
+    // if (!state) {
+    //   toast.error("Please select state");
+    // } else if (!lga) {
+    //   toast.error("Please select LGA");
+    // } else if (!pollingUnit) {
+    //   toast.error("Please select polling unit");
+    // } else if (isFormCorrect === null) {
+    //   toast.error("Please let us know if the form is intact or not");
+    // } else if (recaptchaValue === null) {
+    //   toast.error("You must verify your identity to continue");
+    // } else {
+    //   const transcriptionData = {
+    //     polling_unit_id: pollingUnit.id,
+    //     image_id: data.image.id,
+    //     has_corrections:
+    //       isFormCorrect === "true" || isFormCorrect === true ? true : false,
+    //     // g_recaptcha_response: recaptchaValue,
+    //     state_id: state.id,
+    //     lga_id: lga.id,
+    //     is_not_stamped: isNotStamped,
+    //     parties: serializePartiesDataForSubmission(pollValues),
+    //   };
+    //   if (session_id) transcriptionData.session_id = session_id;
+    //   const response = await dispatch(
+    //     storeTranscribedDataV2Async(transcriptionData)
+    //   );
+    //   if (response.payload) {
+    //     if (!session_id)
+    //       localStorage.setItem("session_id", response.payload.session_id);
+    //     setShowModal(true);
+    //     // toast.success("Data submitted successfully");
+    //     refetchData();
+    //   } else {
+    //     toast.error("An error occured!");
+    //   }
+    //   //       toast.error("we are yet to start v2 validation!");
+    // }
   };
 
   return (
     <>
-      <Modal isActive={showModal} />
+      {/* <Modal isActive={showModal} /> */}
       <section style={{ margin: "0 0 32px 0" }}>
         <h3 style={{ margin: "0 0 10px 0" }}>Registration Area</h3>
         <DroopdownWrapper>
@@ -356,7 +355,7 @@ export const FormSectionV2 = ({ data, refetch }) => {
           margin="16px 0 0 0"
         /> */}
         <Button
-          disabled={!recaptchaDone}
+          disabled={false}
           onClick={prepareSubmissionData}
           bgColor="#147b5c"
           color="#ffffff"

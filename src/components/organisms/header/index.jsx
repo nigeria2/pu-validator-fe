@@ -9,7 +9,11 @@ export const Header = ({ stats }) => {
       <StyledInstructionBox>
         <h2>INSTRUCTIONS</h2>
 
-        <p> ENTER THE NUMBERS YOU SEE IN THE IMAGE INTO THE TEXTBOXES</p>
+        <p>
+          {" "}
+          VALIDATION OF RESULTS IS NOW COMPLETE. THE RESULTS WILL SOON BE
+          PUBLISHED
+        </p>
       </StyledInstructionBox>
       {/* <Flex alignItems="center" margin="0 0 16px 0">
         <Icons width="35" type="warning" fill="#ffc107" />{" "}
