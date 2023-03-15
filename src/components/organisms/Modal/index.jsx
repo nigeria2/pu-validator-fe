@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import styled, { keyframes } from "styled-components";
 import { screen } from "../../theme/utils";
@@ -89,16 +89,8 @@ function generateRandomIndex(max) {
 }
 
 const Modal = ({ isActive }) => {
-  const [openModal, setOpenModal] = useState(false);
-
-  useEffect(() => {
-    if (isActive === true) {
-      setOpenModal(true);
-    } else setOpenModal(false);
-  }, [isActive]);
-
   return ReactDOM.createPortal(
-    openModal ? (
+    isActive === true ? (
       <ModalWrapper>
         <ModalContent>
           <Icon src={Congrats} />
