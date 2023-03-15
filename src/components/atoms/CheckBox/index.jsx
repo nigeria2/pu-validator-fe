@@ -20,7 +20,13 @@ export const CheckBox = ({ keyValue, name, label, value, onChange }) => {
   return (
     <Flex key={keyValue} margin="0 0 10px 0">
       <Label>
-        <Input type="checkbox" value={value} name={name} onChange={onChange} />
+        <Input
+          disabled
+          type="checkbox"
+          value={value}
+          name={name}
+          onChange={onChange}
+        />
         {label}
       </Label>
     </Flex>
