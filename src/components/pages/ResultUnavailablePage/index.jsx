@@ -26,14 +26,7 @@ export const ResultUnavailablePage = () => {
   return (
     <StatisticsTemplate header={<NavBar />} footer={<Footer />}>
       <Wrapper>
-        <TextContainer>
-          <p>
-            Based on advice from the legal team, we are going to show the
-            results when the process is complete. Please continue working hard
-            to reclaim the mandate.
-          </p>
-          <p>Every validation counts.</p>
-        </TextContainer>
+<a href="https://drive.google.com/drive/folders/173oHgms6wYy5WKz_i3Lhl5mXcmobCWHz">View result here</a>
       </Wrapper>
     </StatisticsTemplate>
   );
